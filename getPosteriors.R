@@ -3,7 +3,8 @@ burnin <- function(df) {
 	df <- df[-c(1:floor(0.1*dim(df)[1])),]
 }
 
-logPath <- '~/Desktop/PhD/phyloDataSignal/logFiles/'
+path <- getwd()
+logPath <- paste0(path, '/log/')
 
 files <- dir(path=logPath, pattern='.+.log')
 log <- lapply(paste0(logPath, files), function(x) read.table(head=T, x))
@@ -32,19 +33,19 @@ for (r in 1:10){
 
 
 				# seq data p= (equiv. full data or amount reduced)
-				name <- paste0('seqInfREP', r, '_p', p, '_chain', c, '.log')
+				name <- paste0('seqInfREP', r, 'p', p, 'c', c, '.log')
 				fullData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# seq data p=1 (equiv. occurrences)
-				name <- paste0('seqInfREP', r, '_p', 1, '_chain', c, '.log')
+				name <- paste0('seqInfREP', r, 'p', 1, 'c', c, '.log')
 				occData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# date date p=0 (equiv. date estiamtion or amount reduced)
-				name <- paste0('dateInfREP', r, '_p', p, '_chain', c, '.log')
+				name <- paste0('dateInfREP', r, 'p', p, 'c', c, '.log')
 				dateEstOcc <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# date date p=1 (equiv. true prior)
-				name <- paste0('dateInfREP', r, '_p', 1, '_chain', c, '.log')
+				name <- paste0('dateInfREP', r, 'p', 1, 'c', c, '.log')
 				truePrior <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 				
 				maxLen <- max(length(fullData), length(occData), length(dateEstOcc), length(truePrior))
@@ -53,7 +54,7 @@ for (r in 1:10){
 				length(dateEstOcc) <- maxLen
 				length(truePrior) <- maxLen
 
-				elementName <- paste0('rep', r, '_p', p, '_chain', c, '_samp', j)
+				elementName <- paste0('rep', r, 'p', p, 'c', c, 's', j)
 				comps[[elementName]] <- as.data.frame(cbind(fullData, occData, dateEstOcc, truePrior))
 
 				chain <- c(chain, c)
@@ -63,19 +64,19 @@ for (r in 1:10){
 
 				} else {
 									# seq data p= (equiv. full data or amount reduced)
-				name <- paste0('seqInfREP', r, '_p', p, '_chain', c, '.log')
+				name <- paste0('seqInfREP', r, 'p', p, 'c', c, '.log')
 				fullData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# seq data p=1 (equiv. occurrences)
-				name <- paste0('seqInfREP', r, '_p', 1, '_chain', c, '.log')
+				name <- paste0('seqInfREP', r, 'p', 1, 'c', c, '.log')
 				occData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# date date p=0 (equiv. date estiamtion or amount reduced)
-				name <- paste0('dateInfREP', r, '_p', p, '_chain', c, '.log')
+				name <- paste0('dateInfREP', r, 'p', p, 'c', c, '.log')
 				dateEstOcc <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 
 				# date date p=1 (equiv. true prior)
-				name <- paste0('dateInfREP', r, '_p', 1, '_chain', c, '.log')
+				name <- paste0('dateInfREP', r, 'p', 1, 'c', c, '.log')
 				truePrior <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
 				
 				maxLen <- max(length(fullData), length(occData), length(dateEstOcc), length(truePrior))
@@ -84,7 +85,7 @@ for (r in 1:10){
 				length(dateEstOcc) <- maxLen
 				length(truePrior) <- maxLen
 
-				elementName <- paste0('rep', r, '_p', p, '_chain', c, '_samp', j)
+				elementName <- paste0('rep', r, 'p', p, 'c', c, 's', j)
 				comps[[elementName]] <- as.data.frame(cbind(fullData, occData, dateEstOcc, truePrior))
 				comps[[elementName]] <- comps[[elementName]][sample(1:dim(comps[[elementName]])[1], 1000),]
 				
