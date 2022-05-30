@@ -9,4 +9,7 @@ xml
 *.trees
 *.state
 **/clustersForLeo
+**/empiricalAnalyses/oldTemplates
 *.csv
+**/.DS_store
+**/sebHelp.nosync
