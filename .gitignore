@@ -13,4 +13,6 @@ xml
 *.csv
 **/.DS_store
 **/sebHelp.nosync
-**/empiricalAnalyses/oldTemplates/vicCovid/getGammaSubstModel.xml
+**/empiricalAnalyses/vicCovid/getGammaSubstModel.xml
+**/empiricalAnalyses/figsEmpirical.R
+**/empiricalAnalyses/exploreCovidDatasets.R
