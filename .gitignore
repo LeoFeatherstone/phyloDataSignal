@@ -4,3 +4,8 @@ scratch/
 trees
 xml
 *.RData
+*.fasta
+*.log
+*.trees
+*.state
+**/clustersForLeo

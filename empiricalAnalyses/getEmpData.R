@@ -1,0 +1,97 @@
+# getting posteriors first and measuring ESS
+path <- getwd()
+logPath <- paste0(path, '/vicCovid/')
+
+files <- dir(path=logPath, pattern='.+.log')
+
+log <- lapply(paste0(logPath, files[1:length(files)]), function(x) read.table(head=T, x))
+backup <- log
+
+names(log) <- gsub(files, pattern='\\.log', replacement='')
+
+# remving burnin
+burnin <- function(df) {
+	df <- df[-c(1:floor(0.5*dim(df)[1])),]
+}
+
+for (i in 1:length(log)){
+		log[[i]] <- burnin(log[[i]])
+		print(i)
+}
+
+# for ess check
+ess <- vector()
+for (i in 1:length(log)){
+	ess <- c(ess, coda::effectiveSize(coda::as.mcmc(log[[i]])[, which(grepl('reproductiveNumber', colnames(coda::as.mcmc(log[[i]]))))]))
+}
+names(ess) <- names(log)
+# all abve 200 with 50% burnin
+
+
+# constructing a list with logs grouped in 4 for each condition
+empChains <- list()
+# looping through analysesempChains
+for (stem in c('TN3_GC.7.117.101.140', 'TN3_GC.7.117.502.114')){
+	# seq data p= (equiv. full data or amount reduced)
+	name <- paste0('fullData', stem)
+	fullData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
+
+	# seq data p=1 (equiv. occurrences)
+	name <- paste0('dateData', stem)
+	dateData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
+
+	# date date p=0 (equiv. date estiamtion or amount reduced)
+	name <- paste0('seqData', stem)
+	seqData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
+
+	# date date p=1 (equiv. true prior)
+	name <- paste0('noData', stem)
+	noData <- log[[name]][, which(grepl('reproductiveNumber', names(log[[name]])))]
+					
+	maxLen <- max(length(fullData), length(dateData), length(seqData), length(noData))
+	length(fullData) <- maxLen
+	length(dateData) <- maxLen
+	length(seqData) <- maxLen
+	length(noData) <- maxLen
+
+	elementName <- paste0(stem)
+	empChains[[elementName]] <- as.data.frame(cbind(fullData, dateData, seqData, noData))
+}			
+save(empChains, file='empPostR0.RData')
+
+# get Wasserstein metrics now
+load('empPostR0.RData')
+
+# function for distance from posterior with full data
+wassersteinCompare <- function(df) {
+	OP <- c(transport::wasserstein1d(na.omit(df$fullData), na.omit(df$dateData)),
+			transport::wasserstein1d(na.omit(df$fullData), na.omit(df$seqData)),
+				transport::wasserstein1d(na.omit(df$fullData), na.omit(df$noData)))
+	names(OP) <- c('fullData||dateData',
+					'fullData||seqData',
+					'fullData||noData')
+	return(OP)
+}
+
+tmp <- lapply(empChains, function(x) wassersteinCompare(x))
+empWassersteinDist <- data.frame()
+
+for (i in 1:length(tmp)){
+	empWassersteinDist <- rbind(empWassersteinDist, tmp[[i]])
+}
+
+rownames(empWassersteinDist) <- names(tmp)
+colnames(empWassersteinDist) <- names(tmp[[1]])
+
+# classify
+empWassersteinClass <- vector()
+for (i in 1:dim(empWassersteinDist)[1]){
+	if(empWassersteinDist[i,1]<empWassersteinDist[i,2]){
+		empWassersteinClass <- c(empWassersteinClass, 'Date-Driven')
+	} else {
+		empWassersteinClass <- c(empWassersteinClass, 'Seq-Driven')
+	}
+}
+names(empWassersteinClass) <- names(empChains)
+
+save(empWassersteinDist, empWassersteinClass, file='empWassersteinData.RData')
