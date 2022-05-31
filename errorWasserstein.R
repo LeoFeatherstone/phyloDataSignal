@@ -143,6 +143,6 @@ dev.off()
 # num mismatches out of 40000
 print(sum(errorClass$mismatch))
 # =329
-
-
+# how many of 400 had a mismatch
+length(unique(errorClass[which(errorClass$mismatch == 1),]$id)) # = 17
 
