@@ -54,9 +54,9 @@ for (i in 1:length(trees)){
 # NB, omitting the -f and 0t flags under the HKY results in the JC as base frequencies are assumed equal and TS/TV = 0.5
 for (i in 1:length(tFiles)){
 	# r = 10^-3
-	system(paste0('/Applications/PHYLO_APPS/Seq-Gen-1.3.4/source/seq-gen -z 4321 -l 20000 -m HKY -s 0.001 -of ', treePath, tFiles[i], '.tree', ' >>', fastaPath, tFiles[i], 'r1e-03','.fasta'))
+	system(paste0('#SEQ-GEN-PATH -z 4321 -l 20000 -m HKY -s 0.001 -of ', treePath, tFiles[i], '.tree', ' >>', fastaPath, tFiles[i], 'r1e-03','.fasta'))
 	# r= 10^-5
-	system(paste0('/Applications/PHYLO_APPS/Seq-Gen-1.3.4/source/seq-gen -z 4321 -l 20000 -m HKY -s 0.00001 -of ', treePath, tFiles[i], '.tree', ' >>', fastaPath, tFiles[i], 'r1e-05','.fasta'))
+	system(paste0('#SEQ-GEN-PATH -z 4321 -l 20000 -m HKY -s 0.00001 -of ', treePath, tFiles[i], '.tree', ' >>', fastaPath, tFiles[i], 'r1e-05','.fasta'))
 }
 
 # saving xml data
@@ -67,7 +67,7 @@ save(xmlData, file=paste0(treePath, 'originData.RData'))
 # generating sequences under HKY
 #for (i in 1:length(tFiles)){
 #	# r = 10^-3
-#	system(paste0('/Applications/PHYLO_APPS/Seq-Gen-1.3.4/source/seq-gen -z 4321 -l 30000 -m HKY -i 0.33 -s 0.001 -of ', treePath, tFiles[i], ' >>', fastaPath, 't', i, 'n', 50, 'r1e-03','.fasta'))
+#	system(paste0('SEQ-GEN-PATH -z 4321 -l 30000 -m HKY -i 0.33 -s 0.001 -of ', treePath, tFiles[i], ' >>', fastaPath, 't', i, 'n', 50, 'r1e-03','.fasta'))
 	# r= 10^-5
-#	system(paste0('/Applications/PHYLO_APPS/Seq-Gen-1.3.4/source/seq-gen -z 4321 -l 30000 -m HKY -i 0.33 -s 0.00001 -of ', treePath, tFiles[i], ' >>', fastaPath, 't', i, 'n', 50, 'r1e-05','.fasta'))
+#	system(paste0('SEQ-GEN-PATH -z 4321 -l 30000 -m HKY -i 0.33 -s 0.00001 -of ', treePath, tFiles[i], ' >>', fastaPath, 't', i, 'n', 50, 'r1e-05','.fasta'))
 #}
