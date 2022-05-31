@@ -54,7 +54,9 @@ classify <- function(df){
 errorClass <- lapply(tmp, function(x) classify(x))
 save(errorClass, file='errorWasserstein.RData')
 
-backup <- errorClass
+################################################################
+### Can start from here once errorWasserstein.RData is saved ###
+################################################################
 
 # Now compare to full classification
 load('wassersteinData.RData')
@@ -62,17 +64,19 @@ load('errorWasserstein.RData')
 
 # convert errorClass to a tibble to check match between subsample and full-data classification 
 completeAnalysisClass <- as.data.frame(cbind(names(wassersteinClass), unname(wassersteinClass)))
-colnames(completeAnalysisClass) <- c('id', 'completeDataClass')
+colnames(completeAnalysisClass) <- c('id', 'completeAnalysisClass')
 
 errorClass <- bind_rows(errorClass, .id='id') %>% left_join(completeAnalysisClass, by='id')
 
 
 # finding mismatch, add difference in Wdate and Wseq to compare this with
 ## need to rename columns with pipe
-colnames(wassersteinData)[1:3] <- c('Wdate', 'Wseq', 'WnoData')
-diff <- wassersteinData %>% mutate(diff = abs(Wdate-Wseq)) %>% select(Wdate, Wseq, WnoData, diff,id)
+wassersteinDist <- cbind(rownames(wassersteinDist), wassersteinDist)
+colnames(wassersteinDist)[1:4] <- c('id', 'dateDataW', 'seqDataW', 'noDataW')
 
-errorClass <- errorClass %>% mutate(mismatch = as.numeric(wassersteinClass != completeDataClass)) %>% 
+diff <- wassersteinDist %>% mutate(dSD = abs(dateDataW-seqDataW)) %>% select(dateDataW, seqDataW, noDataW, dSD,id)
+
+errorClass <- errorClass %>% mutate(mismatch = as.numeric(wassersteinClass != completeAnalysisClass)) %>% 
 				left_join(diff, by='id')
 
 # num mismatches by id
@@ -81,7 +85,7 @@ tmp <- errorClass %>% select(id, mismatch) %>% group_by(id) %>% summarise(num=su
 diff <- diff %>% left_join(tmp, by='id') 
 
 # plotting
-viol <- ggplot(diff, aes(y=diff, x=num>0, fill=num>0)) + 
+viol <- ggplot(diff, aes(y=dSD, x=num>0, fill=num>0)) + 
 		geom_violin(draw_quantiles = c(0.5)) + 
 		geom_point(shape = 21,size=2, position = position_jitterdodge(), color="black",alpha=1) +
 		xlab('') + ylab(latex2exp::TeX('$\\log_{10}(d_{SD})$')) +
@@ -98,7 +102,7 @@ viol <- ggplot(diff, aes(y=diff, x=num>0, fill=num>0)) +
 				axis.title=element_text(size=16),
 				axis.text=element_text(size=14))
 
-line <- ggplot(diff, aes(y=num, x=diff, fill=num>0)) + 
+line <- ggplot(diff, aes(y=num, x=dSD, fill=num>0)) + 
 		geom_point(shape = 21,size=2,color="black") +
 		geom_smooth(se=F, col='black', fill=NA, lwd=0.5) +
 		ylab('Number of Misclassifications') + xlab(latex2exp::TeX('$\\log_{10}(d_{SD})$')) +
@@ -114,7 +118,7 @@ line <- ggplot(diff, aes(y=num, x=diff, fill=num>0)) +
 				axis.title=element_text(size=14),
 				axis.text=element_text(size=14))
 
-leg <- cowplot::get_legend(ggplot(diff, aes(y=num, x=diff, fill=num>0)) + 
+leg <- cowplot::get_legend(ggplot(diff, aes(y=num, x=dSD, fill=num>0)) + 
 		geom_point(shape = 21,size=2,color="black") +
 		geom_smooth(se=F, col='steelblue', fill=NA) +
 		ylab('Number of Misclassifications') + xlab(latex2exp::TeX('$\\log_{10}(|W_{S_{R_{0}}} - W_{D_{R_{0}}}|)$')) +
@@ -132,8 +136,8 @@ leg <- cowplot::get_legend(ggplot(diff, aes(y=num, x=diff, fill=num>0)) +
 
 p1 <- cowplot::plot_grid(line, viol, labels='AUTO', ncol=2)
 
-pdf(paste0(figPath, 'errorWasserstein.pdf'), useDingbats=F, height=8, width=16)
-	cowplot::plot_grid(p1, leg, ncol=1, rel_heights=c(10,1))
+pdf(paste0(figPath, 'errorWasserstein.pdf'), useDingbats=F, height=5, width=8)
+	cowplot::plot_grid(p1, leg, ncol=1, rel_heights=c(5,1))
 dev.off()
 
 # num mismatches out of 40000
