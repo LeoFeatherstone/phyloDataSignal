@@ -16,3 +16,4 @@ xml
 **/empiricalAnalyses/vicCovid/getGammaSubstModel.xml
 **/empiricalAnalyses/figsEmpirical.R
 **/empiricalAnalyses/exploreCovidDatasets.R
+*.docx
