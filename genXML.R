@@ -3,7 +3,7 @@
 
 # paths to imnput and output
 path <- getwd()
-fastaPath <- paste0(path, '/fasta.nosync/')
+fastaPath <- paste0(path, '/fasta/')
 tempXMLPath <- paste0(path, '/xmlTemplates/')
 xmlPath <- paste0(path, '/xml/')
 load(paste0(path, '/trees/originData.RData'))
