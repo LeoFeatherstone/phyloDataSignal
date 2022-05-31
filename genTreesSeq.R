@@ -8,10 +8,10 @@ library(NELSI)
 path <- getwd()
 
 # making directories for trees and sequence alignments 
-#system('mkdir trees')
+system('mkdir trees')
 treePath <- paste0(path, '/trees/')
-#system('mkdir fasta.nosync')
-fastaPath <- paste0(path, '/fasta.nosync/')
+system('mkdir fasta')
+fastaPath <- paste0(path, '/fasta/')
 
 # making trees
 #setting seed
