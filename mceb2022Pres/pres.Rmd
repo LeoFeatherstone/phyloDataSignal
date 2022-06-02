@@ -1,0 +1,95 @@
+---
+title: "Assessing the effect of date and sequence data in phylodynamics"
+author: "Leo A. Featherstone"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library('plotly')
+library('tidyverse')
+library('viridis')
+```
+
+## About me
+-   PhD candidate (2021-2024) @ Peter Doherty Institute Melbourne, Australia 
+-   Working with Dr. Sebastian Duchene, Dr. Timothy Vaughan, and Prof. Ben Phillips
+<!-- Include twitter and git links-->
+
+## Project origins
+- RA @ Doherty in 2020
+- Plateau of information from many genomes. Do dates drive?
+
+## Chose to focus on birth-death
+
+## Separating data sources
+<!-- Build up schematic -->
+
+## Output
+<!-- Interactive fig of different posteriors? -->
+```{r include=FALSE}
+## load data
+load('../wassersteinData.RData')
+load('../postR0.RData')
+
+# making plot data
+metaData <- as.data.frame(cbind(rate, sampProp, wassersteinClass, names(wassersteinClass)))
+colnames(metaData) <- c('rate', 'sampProp', 'wassersteinClass', 'id')
+
+post <- bind_rows(chains[c(5:6)], .id='id') %>% left_join(metaData) %>% 
+pivot_longer(ends_with("Data"), values_to='R0', names_to='post', values_drop_na=T)
+
+id.labs <- c(rep('Tree 2',3), 'Tree 8')
+names(id.labs) <- names(chains[c(5:6)])
+rate.labs <- c(('0.00001 (subs/site/year)'), ('0.001 (subs/site/year)'))
+#rate.labs <- c(expression('10'^{-3}~'(subs/site/year)'), expression('10'^{-5}~'(subs/site/year)'))
+names(rate.labs) <- unique(post$rate)
+sampProp.labs <- c('p=0.5', 'p=1.0')
+names(sampProp.labs) <- unique(post$sampProp)
+
+fig <- 	ggplot(post, aes(x=R0, fill=(post), label=wassersteinClass)) + geom_density() +
+			#labs(x=expression('Posterior R'[0]), y='Density') +
+			scale_fill_manual(values=alpha(viridis(4),0.5)) +
+			#	labels=c('Date Data', 'Full Data', 'Marginal Prior', 'Sequence Data')) +
+			geom_text(x=4.5, y=1, check_overlap=T) +
+			facet_wrap(id~rate~sampProp,
+				labeller = labeller(id = id.labs, rate = rate.labs, sampProp=sampProp.labs),
+				nrow=2) +
+			theme_bw() +
+			theme(legend.position='bottom',
+				legend.title=element_blank()) 
+# turn into plotly
+ggplotly(fig)
+
+p1 <-ggplotly(fig)
+p1 <- p1 %>% layout(updatemenus = list(
+    list(buttons = list(
+      list(method = "restyle",
+           args = list(list(x = list(post[which(post$rate == "1e-03"),]$R0))),
+           label = "re-3"),
+      list(method = "restyle",
+           args = list(list(x = list(post[which(post$rate == "1e-05"),]$R0))),
+           label = "re-5")
+    ))
+  ))
+path <- file.path(getwd(), "/widgets/", "area.html")
+htmlwidgets::saveWidget(as_widget(p1), file = path)
+```
+<iframe src="widgets/area.html"></iframe>
+
+## Comparing possterior signal
+- Wasserstein metric
+- How much force does it take to push one dustribution into another?
+
+$$ W_D = \int_0^1 |F_{D}^{-1}(u)-F_{F}^{-1}(u)| \; du $$
+
+<!-- Slide N-1 -->
+## Acknowledgements 
+> - cEvo lab & Swissnex
+> - Lionell gell Foundation 
+
+<!-- Slide N-->
+## All questions welcome 
+
