@@ -26,6 +26,6 @@ for(i in 1:dim(xmlData)[1]){
 	tmp <- lapply(tmp, function(x) gsub(x, pattern='STEM', replacement=fastaStem))
 
 	for (j in 1:length(tmp)){
-		writeLines(tmp[[j]], con=paste0(xmlPath, names(tmp[j]), fastaStem, 'c1.xml'))
+		writeLines(tmp[[j]], con=paste0(xmlPath, names(tmp[j]), fastaStem, '.xml'))
 	}
 }

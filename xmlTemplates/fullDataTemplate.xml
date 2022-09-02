@@ -166,7 +166,7 @@
 
         <!--operator id="origScaler_BDSKY_Serial" spec="ScaleOperator" parameter="@origin_BDSKY_Serial" weight="1.0"/-->
 
-        <logger id="tracelog" spec="Logger" fileName="fullDataSTEMc1.log" logEvery="5000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <logger id="tracelog" spec="Logger" fileName="fullDataSTEM.log" logEvery="5000" model="@posterior" sanitiseHeaders="true" sort="smart">
                     
             <log idref="posterior"/>
                     
@@ -198,11 +198,11 @@
                 
         </logger>
             
-        <!--logger id="treelog" spec="Logger" fileName="fullDataSTEMc1.trees" logEvery="5000" mode="tree">
+        <logger id="treelog" spec="Logger" fileName="fullDataSTEM.trees" logEvery="5000" mode="tree">
                     
             <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree"/>
                 
-        </logger-->
+        </logger>
             
         <operatorschedule id="OperatorSchedule" spec="OperatorSchedule"/>
         

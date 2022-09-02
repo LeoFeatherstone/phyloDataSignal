@@ -2,9 +2,6 @@ library(ape)
 library(TreeSim)
 library(NELSI)
 
-
-
-# starting with a dataset of 10 trees
 path <- getwd()
 
 # making directories for trees and sequence alignments 
@@ -16,19 +13,21 @@ fastaPath <- paste0(path, '/fasta/')
 # making trees
 #setting seed
 set.seed(1234)
-trees1 <- lapply(1:100, function(x) sim.bdsky.stt(n=50, lambdasky=2.5, deathsky=1, sampprobsky=0.5, timesky=0, timestop=0))
+trees1 <- lapply(1:100, function(x) sim.bdsky.stt(n=25, lambdasky=2.5, deathsky=1, sampprobsky=0.05, timesky=0, timestop=0))
 set.seed(1234)
-trees2 <- lapply(1:100, function(x) sim.bdsky.stt(n=100, lambdasky=2.5, deathsky=1, sampprobsky=1, timesky=0, timestop=0))
+trees2 <- lapply(1:100, function(x) sim.bdsky.stt(n=250, lambdasky=2.5, deathsky=1, sampprobsky=0.5, timesky=0, timestop=0))
+set.seed(1234)
+trees3 <- lapply(1:100, function(x) sim.bdsky.stt(n = 500, lambdasky = 2.5, deathsky = 1, sampprobsky = 1, timesky = 0, timestop = 0))
 
 # data for naming
-sampProp <- c(rep(0.5, times=100), rep(1, times=100))
-treeNum <- rep(1:100, times=2)
+sampProp <- c(rep(0.05, times = 100), rep(0.5, times = 100), rep(1, times = 100))
+treeNum <- rep(1:100, times=3)
 
 #sanity check of subtree via sampling
 #which(diag(vcv.phylo(trees1[[1]][[1]])) %in% diag(vcv.phylo(trees2[[1]][[1]])))
 
 # combining tree lists
-trees <- c(trees1, trees2)
+trees <- c(trees1, trees2, trees3)
 
 # getting info on height for origins 
 origin <- vector()
@@ -59,12 +58,12 @@ for (i in 1:length(tFiles)){
 	system(paste0('#SEQ-GEN-PATH -z 4321 -l 20000 -m HKY -s 0.00001 -of ', treePath, tFiles[i], '.tree', ' >>', fastaPath, tFiles[i], 'r1e-05','.fasta'))
 }
 
-# saving xml data
+# saving origin data for xml
 xmlData <- as.data.frame(cbind(rep(tFiles, each=2), rep(origin, each=2), rep((c('1e-03', '1e-05')), times=100)))
 colnames(xmlData) <- c('tree', 'origin', 'rate')
 save(xmlData, file=paste0(treePath, 'originData.RData'))
 
-# generating sequences under HKY
+# generating sequences under HKY NOT DONE IN FINAL STUDY
 #for (i in 1:length(tFiles)){
 #	# r = 10^-3
 #	system(paste0('SEQ-GEN-PATH -z 4321 -l 30000 -m HKY -i 0.33 -s 0.001 -of ', treePath, tFiles[i], ' >>', fastaPath, 't', i, 'n', 50, 'r1e-03','.fasta'))

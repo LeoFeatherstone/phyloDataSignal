@@ -213,9 +213,9 @@
                 
         </logger>
             
-        <!--logger id="treelog" spec="Logger" fileName="noDataSTEMc1.trees" logEvery="5000" mode="tree">
+        <logger id="treelog" spec="Logger" fileName="noDataSTEM.trees" logEvery="5000" mode="tree">
             <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree"/>
-        </logger-->
+        </logger>
             
         <operatorschedule id="OperatorSchedule" spec="OperatorSchedule"/>
         
