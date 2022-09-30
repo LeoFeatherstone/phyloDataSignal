@@ -26,6 +26,9 @@ mutate(
   wd < ws ~ "Date-Driven",
   ws < wd ~ "Seq-Driven"
  )
-)
+) %>%
+rownames_to_column("id")
 
+wassersteinData <- cbind(wassersteinData, tree, rate, sampProp)
+# all(paste0('t', wassersteinData$tree, 'p', wassersteinData$sampProp, 'r', wassersteinData$rate) == rownames(wassersteinData)) # SANITY CHECK # nolint
 save(wassersteinData, file = "wassersteinData.RData")
