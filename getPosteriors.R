@@ -1,39 +1,35 @@
-# function to apply burnin 
+### Script collates mcmc chains for simulation study with burnin
+
+# function to apply burnin
 burnin <- function(df) {
-	df <- df[-c(1:floor(0.1*dim(df)[1])),]
+ df <- df[-c(1:500), ]
 }
 
 path <- getwd()
-logPath <- paste0(path, '/log/')
+logPath <- paste0(path, "/log/")
 
-files <- dir(path=logPath, pattern='.+.log')
+files <- dir(path = logPath, pattern = ".+.log")
 
-log <- lapply(paste0(logPath, files[1:length(files)]), function(x) read.table(head=T, x))
-
-log <- list()
-for (i in 1:length(files)){
-	log[[i]] <- read.table(head=T, file=paste0(logPath, files[i]))
-	print(paste('===', i, '==='))
-}
+log <- lapply(paste0(logPath, files), function(x) read.table(head = TRUE, x))
 backup <- log
 
-names(log) <- gsub(files, pattern='\\.log', replacement='')
+names(log) <- gsub(files, pattern = "[.]log", replacement = "")
 
-# keeping burnin for thinned analyses
-for (i in 1:length(log)){
-		log[[i]] <- burnin(log[[i]])
-		print(i)
+# apply burnin
+for (i in 1:seq_along(log)){
+ log[[i]] <- burnin(log[[i]])
+ print(i)
 }
 
-# for ess check
+# sanity check final ESS values
 ess <- vector()
+library(coda)
 for (i in 1:length(log)){
-	ess <- c(ess, coda::effectiveSize(coda::as.mcmc(log[[i]])[, which(grepl('reproductiveNumber', colnames(coda::as.mcmc(log[[i]]))))]))
+ colNames <- colnames(as.mcmc(log[[i]]))
+ ess <- c(ess, effectiveSize(as.mcmc(log[[i]])[, which(grepl('reproductiveNumber', colNames))]))
 }
 names(ess) <- names(log)
-
-# listing those that need extension
-writeLines(names(ess[which(ess>200)]), con=paste0(logPath, 'sufficientESS.txt'))
+# all(ess > 200) == TRUE # nolint
 
 # constructing a list with logs grouped in 4 for each condition
 chains <- list()
@@ -45,7 +41,7 @@ sampProp <- vector()
 # looping through reps
 for (t in 1:100){
 	# loopng through occurrence proportions
-	for (p in c(0.5,1)){
+	for (p in c(0.05, 0.5, 1)){
 		# looping through rates
 		for (r in c('1e-05', '1e-03')){
 			# seq data p= (equiv. full data or amount reduced)

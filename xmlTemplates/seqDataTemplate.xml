@@ -33,7 +33,7 @@
     
     <run id="mcmc" spec="MCMC" chainLength="10000000">
             
-        <state id="state" spec="State" storeEvery="5000">
+        <state id="state" spec="State" storeEvery="10000000">
         <!--  START LEO ADDED THIS -->
         <stateNode id="finalSampleOffset" spec="RealParameter" value="0.1"/>
         <stateNode id="origin" spec="RealParameter" value="ORIGIN"/>
@@ -159,19 +159,19 @@
             
         <operator id="reproductiveNumberScaler" spec="ScaleOperator" parameter="@reproductiveNumber" weight="10.0"/>
 
-        <!--  START LEO ADDED THIS -->
-        <operator spec="ScaleOperator" parameter="@finalSampleOffset" weight="1.0"/>
+        <operator id = "finalSampleOffsetOperator" spec="ScaleOperator" parameter="@finalSampleOffset" weight="1.0"/>
         <!--operator spec="ScaleOperator" parameter="@origin" weight="1.0"/-->   
-        <!--  END LEO ADDED THIS -->
 
-        <!--  START LEO ADDED THIS: including taxon set for tip operator -->
-         <operator spec="TipDateOperator" tree="@Tree"
+        <!-- including taxon set for tip operator -->
+         <operator id = "TipDateOperator"
+            spec="TipDateOperator" tree="@Tree"
             finalSampleOffset="@finalSampleOffset" weight="15.0"
             windowSize="0.1">
             <taxonSet idref="taxonSet"/>
          </operator>
 
-        <operator spec="TipEdgeScaleOperator" tree="@Tree"
+        <operator id = "TipEdgeScaleOperator"
+                spec="TipEdgeScaleOperator" tree="@Tree"
                 finalSampleOffset="@finalSampleOffset" weight="15.0"
                 scaleFactor="0.5">
             <taxonSet idref="taxonSet"/>
@@ -179,7 +179,7 @@
 
         <!--  END LEO ADDED THIS -->
             
-        <logger id="tracelog" spec="Logger" fileName="seqDataSTEM.log" logEvery="5000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <logger id="tracelog" spec="Logger" fileName="seqDataSTEM.log" logEvery="10000">
                     
             <log idref="posterior"/>
                     
@@ -201,7 +201,7 @@
             <!--  END LEO ADDED THIS -->
         </logger>
             
-        <logger id="screenlog" spec="Logger" logEvery="1000">
+        <logger id="screenlog" spec="Logger" logEvery="10000000">
                     
             <log idref="posterior"/>
 
@@ -213,7 +213,7 @@
                 
         </logger>
             
-        <logger id="treelog" spec="Logger" fileName="seqDataSTEM.trees" logEvery="5000" mode="tree">
+        <logger id="treelog" spec="Logger" fileName="seqDataSTEM.trees" logEvery="10000">
             <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" tree="@Tree"/>
         </logger>
             

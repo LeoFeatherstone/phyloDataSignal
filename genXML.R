@@ -29,3 +29,4 @@ for(i in 1:dim(xmlData)[1]){
 		writeLines(tmp[[j]], con=paste0(xmlPath, names(tmp[j]), fastaStem, '.xml'))
 	}
 }
+
