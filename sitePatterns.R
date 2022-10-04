@@ -3,7 +3,7 @@ library(ape)
 
 # starting with a dataset of 10 trees
 path <- getwd()
-fastaPath <- paste0(path, '/fasta.nosync/')
+fastaPath <- paste0(path, '/fasta/')
 
 # loading sequence data and calculating num site patterns and mult. Likelihood
 aFiles <- dir(pattern='.fasta', path=fastaPath)

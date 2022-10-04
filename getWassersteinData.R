@@ -4,6 +4,8 @@ library(tidyverse)
 
 # clasifying by wasserstein statistic
 load("postR0.RData")
+load("sitePatterns.RData")
+load("datePatterns.RData")
 
 # function for distance from posterior with full data
 wassersteinCompare <- function(df) {
@@ -30,5 +32,18 @@ mutate(
 rownames_to_column("id")
 
 wassersteinData <- cbind(wassersteinData, tree, rate, sampProp)
+
+wassersteinData <- wassersteinData %>%
+ left_join(as.data.frame(sitePatterns) %>% rownames_to_column("id"), by = "id")
+
+# format date patterns
+datePatterns <- as.data.frame(datePatterns) %>%
+ rownames_to_column("id")
+
+wassersteinData <- wassersteinData %>%
+ mutate(id = gsub(pattern = "r.+", replacement = "", id)) %>%
+ left_join(datePatterns, by = "id") %>%
+ mutate(id = paste0(id, "r", rate))
+
 # all(paste0('t', wassersteinData$tree, 'p', wassersteinData$sampProp, 'r', wassersteinData$rate) == rownames(wassersteinData)) # SANITY CHECK # nolint
 save(wassersteinData, file = "wassersteinData.RData")
