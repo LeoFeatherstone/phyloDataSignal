@@ -66,6 +66,7 @@ Earlier work showed that sequence sampling times, referred to here as 'date data
 
 Building upon these earlier results, we introduce a theoretical framework and a new method to quantify the effect of sequence and dates for any parameter under the birth death with continuous sampling. We focus on continuous sampling because it is most relevant to how emerging outbreak data are collected. Our method quantifies and visualises the effect each data source has on the posterior distribution of epidemiological parameters of interest. It also classifies which data source is driving the inference, but crucially also provides a measure of  whether  a binary classification is meaningful. These observations are a critical addition the phylodynamic toolkit used to inform public health decisions because they clearly quantify the added-knowledge acquired from genomes in a given analysis.
 
+\iffalse
 \begin{table}[H]
 \centering
 \caption{Separating data to quantify effects}
@@ -78,7 +79,7 @@ Sequence Excluded                   &   Date effects                    &   Marg
 \label{tab:tab1}
 \end{tabular}
 \end{table}
-
+\fi
 %---------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------
 \section*{New Methods}
@@ -86,8 +87,8 @@ Sequence Excluded                   &   Date effects                    &   Marg
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/graphicalMethods.tiff}
-\caption{Graphical summary of the process to quantify signal and classify signal drivers.  \textbf{A}) Coloured boxes give examples of data under each of the 4 treatments with letters in brackets giving shorthand notation for each. From left to right: \emph{Marginal Prior} results from the removal of both date and sequence data. \emph{Dates Only} includes date data while ignoring sequence data through a constant phylogenetic likelihood. This can be represented as converting all sequence characters to `N' (i.e. alignments of fully missing data). \emph{Full data} represents the usual combination of both sequence and date data. This produces a reference distribution from which the Wasserstein metric to other posteriors is calculated. \emph{Sequence Only} corresponds to the removal and re-estimation of dates while sequence data is retained. \textbf{B}) Example posterior output for $R_0$ with colour corresponding to each treatment in \textbf{A}. The Wasserstein metric is calculated as difference in inverse distribution function of each posterior from \emph{Full Data} integrated over 0 to 1. Example values for the Wasserstein metric are given in white boxes. \textbf{C}) The plane with x and y axes $W_D$ and $W_S$ and shaded classification regions. $r_{SD}$ is the Euclidean distance from the origin to a point $(W_D, W_S)$, with higher values indicating that one or both of data and sequence data drive differing signals from the reference posterior. $d_{SD}$ is the vertical distance from a point $(W_D, W_S)$ to the line $y=x$, with points closer to this line corresponding to more similar data and sequence data effects such that classification is less meaningful. In the example, distance from the posterior under only sequence data to the full data posterior ($W_S$) is smallest, leading to classification as `Seq-Driven'.}
+\includegraphics[width=1\linewidth]{../figures/graphicalMethods.eps}
+\caption{Graphical summary of the process to quantify signal and classify signal drivers.  \textbf{A}) Coloured boxes give examples of data under each of the 4 treatments with letters in brackets giving shorthand notation for each. From left to right: \emph{Marginal Prior} results from the removal of both date and sequence data. \emph{Dates Only} includes date data while ignoring sequence data through a constant phylogenetic likelihood. This can be represented as converting all sequence characters to `N' (i.e. alignments of entirely missing data). \emph{Full data} represents the usual combination of both sequence and date data. This produces a reference distribution from which the Wasserstein metric to other posteriors is calculated. \emph{Sequence Only} corresponds to the removal and re-estimation of dates while sequence data is retained. \textbf{B}) Example posterior output for $R_0$ with colour corresponding to each treatment in \textbf{A}. The Wasserstein metric is calculated as difference in inverse distribution function of each posterior from \emph{Full Data} integrated over 0 to 1. Example values for the Wasserstein metric are given in white boxes. \textbf{C}) The plane with x and y axes $W_D$ and $W_S$ and shaded classification regions. $r_{SD}$ is the Euclidean distance from the origin to a point $(W_D, W_S)$, with higher values indicating that one or both of data and sequence data drive differing signals from the reference posterior. $d_{SD}$ is the vertical distance from a point $(W_D, W_S)$ to the line $y=x$, with points closer to this line corresponding to more similar data and sequence data effects such that classification is less meaningful. In the example, distance from the posterior under only sequence data to the full data posterior ($W_S$) is smallest, leading to classification as `Seq-Driven'.}
 \label{fig:method}
 \end{figure}
 
@@ -127,7 +128,7 @@ We simulated 400 alignments to explore the differing signals in date and sequenc
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{figures/postEg.pdf}
+\includegraphics[width=1\linewidth]{figures/postEg.eps}
 \caption{Comparison of full data, date data, sequence data, and no data posteriors for different trees and alignments. Each plot gives an example of posterior output for $R_0$ under each treatment for different one of the 400 test datasets. Tree 8 gives an example of when both date and sequence posteriors are similar while differing from the full data posterior. Here, $r_{SD}$ is higher, while $d_{SD}$ is lower such that classification using the Waserstein metric is both less meaningful and more likely to reflect noise due to MCMC sampling.}
 \label{fig:posts}
 \end{figure}
@@ -142,7 +143,7 @@ We also tested the accuracy of classification using the Wasserstein metric by su
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{figures/wassersteinDistro.pdf}
+\includegraphics[width=1\linewidth]{figures/wassPanel.eps}
 \caption{\textbf{A-C}) Each point represents $(W_D, W_S)$ for one of the 400 simulated datasets. \textbf{A}) The distribution of points with marginal histograms corresponding to the distribution of $W_D$ and $W_S$ respectively. More datasets are classified as date-driven, which is consistent with prior results about the impact of sampling times under the birth-death. \textbf{B}) Points coloured by number of site patterns. Lower site patterns tends to co-occur with date-driven classification. \textbf{C}) Points coloured by date span with no clear patterns corresponding with classification as for site patterns. \textbf{D}) Distribution of $W_S$ and $W_D$ under $p=0.5$ and $p=1$. The similarity of distributions across sampling proportion does not drive differences in $W_S$ and $W_D$.}
 \label{fig:wData}
 \end{figure}
