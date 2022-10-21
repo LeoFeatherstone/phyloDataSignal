@@ -145,7 +145,7 @@ We also tested the accuracy of classification using the Wasserstein metric by su
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figures/wassPanel.eps}
-\caption{\textbf{A-C}) Each point represents $(W_D, W_S)$ for one of the 400 simulated datasets. \textbf{A}) The distribution of points with marginal histograms corresponding to the distribution of $W_D$ and $W_S$ respectively. More datasets are classified as date-driven, which is consistent with prior results about the impact of sampling times under the birth-death. \textbf{B}) Points coloured by number of site patterns. Lower site patterns tends to co-occur with date-driven classification. \textbf{C}) Points coloured by date span with no clear patterns corresponding with classification as for site patterns. \textbf{D}) Distribution of $W_S$ and $W_D$ under $p=0.5$ and $p=1$. The similarity of distributions across sampling proportion does not drive differences in $W_S$ and $W_D$.}
+\caption{\textcolor{blue}{ \textbf{A}) Each point represents $(W_D, W_S)$ for one of the 600 simulated datasets with marginal histograms corresponding to the distribution of $W_D$ and $W_S$ respectively. \textbf{B}) The number of simulated datasets classified as Date of Seq Driven, stratified by evolutionary rate and sampling proportion. \textbf{C}) Points coloured by number of site patterns. Lower site patterns tends to co-occur with date-driven classification. \textbf{D}) Points coloured by date span with no clear patterns corresponding with classification as for site patterns. }}
 \label{fig:wData}
 \end{figure}
 
@@ -230,22 +230,51 @@ We use the \href{https://www.rdocumentation.org/packages/transport/versions/0.12
 
 \begin{figure}[H]
 \centering
+\includegraphics[width=0.5\linewidth]{../figures/wassersteinIntuition.eps}
+\caption{\textcolor{blue}{Visual intuition for calculation of the wasserstein metric. It can be thought of as integration over the horizontal distance between points of the cumulative distribution function. For two sets of posterior samples from an MCMC, the 10 horizontal distances would be replaced by the the size of the greatest set of samples.}}
+\label{fig:wassIntuition}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{../figures/tipDateOp.eps}
+\caption{\textcolor{blue}{Visual intuition for the novel tip-date operator that allows for inference from sequence only datasets. Each row represents a state in an hypothetical MCMC chain. The Final Sample Offset (FSO) is the time between the final sample and the theoretical end of the proposed birth-death process. It is normally held constant in inference. The tip date operator allows for new proposals of the FSO which allows tip dates to rescale relative one each other and in absolute time. The origin time does not contain the FSO.}}
+\label{fig:tipOp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{../figures/postMCITreeDist.eps}
+\caption{\textcolor{blue}{Violin plots of pairwise mutual clustering information tree difference for 100 trees sampled posterior tree distributions for each simulated dataset. 100 trees were samples from each of the 600 posterior tree distributions a total of 100 times, resulting in 60,000 datapoints here, separated by the sampling proportion and evolutionary rate used in each simulation. Uniformly, Full data has the least tree-distance between posterior trees followed by the sequence-only, dates-only, and no-data treatments.}}
+\label{fig:ptreeDist}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{../figures/egTreeSpace.eps}
+\caption{\textcolor{blue}{Tree space for a tree with 3 taxa. There are a total of 18 possible ranked topologies, which would be the size of tree space for an analyses of a sequence-only dataset with tree samples. Trees in blue are those with the sampling chronology A, B, and then C. These represent the tree space for a hypothetical data-only dataset with three sampling times. Moreover, the disparity between the sequence-only tree space and date-only space grows with sample size, such that the state-space for sequence-only data is orders of magnitude larger than that for dates-only}}
+\label{fig:treeSpace}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
 \includegraphics[width=1\linewidth]{../figures/errorWasserstein.eps}
-\caption{A) Each point presents the number of misclassification in subsampling posterior $R_0$ for each of the 400 simulated datasets. X-axis is the log transformed difference between $W_S$ and $W_D$. B) Violin plots with jittered points of the difference between $W_S$ and $W_D$ for simulated alignments where there was wither some one no misclassification. Both A and B support that misclassication only occurs where the difference between $W_S$ and $W_D$ is negligible, and classification is not meaningful in the first instance.}
+\caption{ \textbf{A}) Each point presents the number of misclassification in subsampling posterior $R_0$ for each of the 600 simulated datasets. X-axis is the log transformed difference between $W_S$ and $W_D$. \textbf{B}) Violin plots with jittered points of the difference between $W_S$ and $W_D$ for simulated alignments where there was wither some one no misclassification. Both \textbf{A} and \textbf{B} support that misclassication only occurs where the difference between $W_S$ and $W_D$ is negligible, and classification is not meaningful in the first instance.}
 \label{fig:validateW}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figures/wnHist.eps}
-\caption{Histogram of $W_N$ for each simulated dataset, separated by evolutionary rate and sampling proportion. $W_N$ ranges from 0.1 to 1.2, such that simulated data provide additional information beyond that of the prior in each analysis.}
+\caption{Histogram of $W_N$ for each simulated dataset, separated by evolutionary rate and sampling proportion. $W_N$ ranges from 0.06 to 1.02, such that simulated data provide additional information beyond that of the prior in each analysis.}
 \label{fig:wnHist}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figures/patternsClass.eps}
-\caption{Date patterns ($=\frac{\text{Sampling Span}}{\text{Height}}$) against site patterns for each simulated dataset. Plots are separated by evolutionary rate and sampling proportion such that there are 400 points coloured by Wasserstein Classification across the entire figure. Higher evolutionary rates increase the proportion of Sequence driven datasets, but within each rate there is no clear pattern in date patterns, site patterns, or sampling rate driving classification.}
+\caption{Date patterns ($=\frac{\text{Sampling Span}}{\text{Height}}$) against site patterns for each simulated dataset. Plots are separated by evolutionary rate and sampling proportion such that there are 600 points coloured by Wasserstein Classification across the entire figure. Higher evolutionary rates increase the proportion of Sequence driven datasets, but within each rate there is no clear pattern in date patterns, site patterns, or sampling rate driving classification.}
 \label{fig:patterns}
 \end{figure}
 
