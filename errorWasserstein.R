@@ -145,11 +145,16 @@ tiff(file = paste0(figPath, "errorWasserstein.tiff"), compression = "lzw",
 dev.off()
 
 
-# later
+# num of datasets where mismatch occurred
+length(unique(errorClass[which(errorClass$mismatch == 1), ]$id)) 
+# = 99
+
+# num missmatches total
 errorClass <- errorClass %>%
  ungroup()
-# num mismatches out of 60000
 print(sum(errorClass$mismatch))
-# =329
+
+# =99 - actually the same!
+
 # how many of 400 had a mismatch
 length(unique(errorClass[which(errorClass$mismatch == 1), ]$id)) # = 99
