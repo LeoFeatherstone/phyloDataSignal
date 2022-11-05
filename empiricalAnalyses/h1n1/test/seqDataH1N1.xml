@@ -30,7 +30,7 @@
     <map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
     <map name="OneOnX" >beast.math.distributions.OneOnX</map>
     <run id="mcmc" spec="MCMC" chainLength="10000000">
-        <state id="state" spec="State" storeEvery="5000">
+        <state id="state" spec="State" storeEvery="10000000">
         <!-- START ADDED -->
         <stateNode id="finalSampleOffset" spec="beast.core.parameter.RealParameter" value="0.1"/>
             <tree id="Tree" spec="beast.evolution.tree.Tree" name="stateNode">
@@ -78,7 +78,7 @@
                     <changeTimes spec="parameter.RealParameter" value="0.315" id="R0_changeTime"/>
                   </R0>
                   <becomeUninfectiousRate spec="SkylineVectorParameter">
-                    <skylineValues spec="parameter.RealParameter" id="becomeUninfectiousRate_BDSKY_Serial" value="91"/>
+                    <skylineValues spec="parameter.RealParameter" id="becomeUninfectiousRate_BDSKY_Serial" value="91"/>  <!-- I.e. 4 Day infection duration -->
                   </becomeUninfectiousRate>
 
                   <samplingProportion spec="SkylineVectorParameter">
@@ -186,7 +186,7 @@
          </operator>
          <!-- END ADDED -->
 
-        <logger id="tracelog" spec="Logger" fileName="h1n1SeqData.log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <logger id="tracelog" spec="Logger" fileName="seqDataH1N1.log" logEvery="10000" model="@posterior" sanitiseHeaders="true" sort="smart">
             <log idref="posterior"/>
             <log idref="likelihood"/>
             <log idref="prior"/>
@@ -210,7 +210,7 @@
             <log idref="likelihood"/>
             <log idref="prior"/>
         </logger>
-        <logger id="treelog" spec="Logger" fileName="h1n1SeqData.trees" logEvery="1000" mode="tree">
+        <logger id="treelog" spec="Logger" fileName="seqDataH1N1.trees" logEvery="10000" mode="tree">
             <log id="TreeWithMetaDataLogger" spec="beast.evolution.tree.TreeWithMetaDataLogger" branchratemodel="@RelaxedClock" tree="@Tree"/>
         </logger>
         <operatorschedule id="OperatorSchedule" spec="OperatorSchedule"/>
