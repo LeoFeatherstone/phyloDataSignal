@@ -6,6 +6,7 @@ library(viridis)
 library(reshape)
 library(cowplot)
 library(tidyverse)
+library(ggtext)
 
 path <- getwd()
 figPath <- paste0(path, "/figures/")
@@ -21,12 +22,12 @@ left_join(wassersteinData) %>%
 pivot_longer(ends_with("Data"), values_to = "R0", names_to = "type", values_drop_na = TRUE)
 
 # labels for facets
-rate.labs <- c(("Simulation rate: 10^-5 (subs/site/year)"), ("Simulation rate: 10^-3 (subs/site/year)"))
+rate.labs <- c(("Simulation rate: 10^(-5) (subs/site/year)"), ("Simulation rate: 10^(-3) (subs/site/year)"))
 names(rate.labs) <- unique(post$rate)
 sampProp.labs <- c("Simulation sampling proportion = 0.5", "Simulation sampling proportion = 1.0")
 names(sampProp.labs) <- unique(post$sampProp)[-1]
 
-tiff(file = paste0(figPath, "postEg.tiff"))
+tiff(file = paste0(figPath, "postEg.tiff"), compression = "lzw")
  ggplot(subset(post, sampProp != 0.05), aes(x = R0, fill = type, label = class)) + geom_density() +
  labs(x = expression("Posterior R"[0]), y = "Density") +
  scale_fill_manual(values = alpha(viridis(4), 0.5), 
@@ -40,6 +41,6 @@ tiff(file = paste0(figPath, "postEg.tiff"))
  theme(legend.position="bottom",
   legend.title = element_blank(),
   legend.text = element_text(size = 12),
-  strip.text = element_text(size = 12),
+  strip.text = element_markdown(size = 12),
   axis.title = element_text(size = 12))
 dev.off()
