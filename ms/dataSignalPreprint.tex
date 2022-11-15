@@ -88,7 +88,7 @@ Sequence Excluded                   &   Date effects                    &   Marg
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/graphicalMethods.eps}
+\includegraphics[width=1\linewidth]{../figures/graphicalMethods.pdf}
 \caption{Graphical summary of the process to quantify signal and classify signal drivers.  \textbf{A}) Coloured boxes give examples of data under each of the 4 treatments with letters in brackets giving shorthand notation for each. From left to right: \emph{Marginal Prior} results from the removal of both date and sequence data. \emph{Dates Only} includes date data while ignoring sequence data through a constant phylogenetic likelihood. This can be represented as converting all sequence characters to `N' (i.e. alignments of entirely missing data). \emph{Full data} represents the usual combination of both sequence and date data. This produces a reference distribution from which the Wasserstein metric to other posteriors is calculated. \emph{Sequence Only} corresponds to the removal and re-estimation of dates while sequence data is retained. \textbf{B}) Example posterior output for $R_0$ with colour corresponding to each treatment in \textbf{A}. The Wasserstein metric is calculated as difference in inverse distribution function of each posterior from \emph{Full Data} integrated over 0 to 1. Example values for the Wasserstein metric are given in white boxes. \textbf{C}) The plane with x and y axes $W_D$ and $W_S$ and shaded classification regions. $r_{SD}$ is the Euclidean distance from the origin to a point $(W_D, W_S)$, with higher values indicating that one or both of data and sequence data drive differing signals from the reference posterior. $d_{SD}$ is the vertical distance from a point $(W_D, W_S)$ to the line $y=x$, with points closer to this line corresponding to more similar data and sequence data effects such that classification is less meaningful. In the example, distance from the posterior under only sequence data to the full data posterior ($W_S$) is smallest, leading to classification as `Seq-Driven'.}
 \label{fig:method}
 \end{figure}
@@ -110,21 +110,11 @@ As in Fig \ref{fig:method}C, we can now consider a plane where the axes are $W_{
 Finally, we can quantify the disagreement in signal between each data source. We define disagreement with respect to the full data posterior, $r_{SD}$ as the magnitude of the vector $(\overrightarrow{W_{D}, W_{S}})$ leading to each point in the plane, which is the radius from the origin to the point in other words. Values near zero indicate that the posteriors under data, sequence, and complete data are all near identical and classification of date or sequence driven is less meaningful. Larger values signify that one or both data sources drive differing posteriors and classification is more meaningful. We also define disagreement without respect to full data $d_{SD} = | W_{S} - W_{D} |$ as a quantification of disagreement between date and sequence posteriors without respect to full data (Fig \ref{fig:validateW}C). Visually, this corresponds to the vertical distance to the nearest classification boundary ($y=x$) such that smaller values correspond to less meaningful classification. $r_{SD}$ and $d_{SD}$ are similar in that when $r_{SD}$ is near-zero,  $d_{SD}$ necessarily is too. $d_{SD}$ also accounts for the case where $r_{SD}$ is high, but both date and sequence data have similarly sized effects. In this case, $r_{SD}$ is higher while $d_{SD}$ is lower and classification of one or another as driving analysis is inaccurate. Tree 8 in Fig \ref{fig:posts} presents an example of this.
 
 \section*{Results}
-\textcolor{blue}{\begin{itemize}
-    \item [\textbf{To do:}]
-    \item Include new figures, update figure legends
-    \item Include new points about frequency of date-classification as sampling proportion increases.
-    \item Include observations about labelled tree parameter space (including sup fig)
-    \item include posterior tree distance observations
-    \item More points on empirical data, motivation for choosing it
-    \item Maybe: Add H1N1 data and contrast to covid
-    \item Maybe: Mention absolute error of datasets
-\end{itemize}}
 \textcolor{blue}{We simulated 600 alignments to explore the differing signals in date and sequence data using the Wasserstein metric. These derive from 100 simulated outbreaks of 500 cases, sampled with proportion 1, 0.5, or 0.05 ($n = 25, 250, \textnormal{or} 500$ accordingly) and used to simulate sequences with an evolutionary rate of $10^{-3}$ or $10^{-5}$ (subs/site/time). Higher evolutionary rates induce more site patterns and therefore more informative sequence data. We estimated $R_0$ under each data treatment with all other parameters fixed using a birth-death tree prior. In all analyses, simulated data provided information in addition to the prior ($W_{N}>0.06$, Fig \ref{fig:wnHist}). Among the 600 datasets, we  observe a mixture of cases where date and sequence data infer similar or dissimilar posterior $R_{0}$. This supports the core assumption that date and sequence data can have differing signals concealed in their combination (Fig \ref{fig:posts}). Classification using the Wasserstein metric results in a mix of date and sequence driven classifications, supporting that our proposed method is sensitive to differences between datasets (Fig \ref{fig:wData}). Most datasets were classified as date-driven (372/600), which is consistent with earlier work showing that dates are highly influential under the birth-death \citep{volz_sampling_2014}.}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/postEg.eps}
+\includegraphics[width=1\linewidth]{../figures/postEg.pdf}
 \caption{\textcolor{blue}{Comparison of full data, date data, sequence data, and no data posterior $R_0$ for four of the 600 simulated datasets. \iffalse Tree 8 gives an example of when both date and sequence posteriors are similar while differing from the full data posterior. Here, $r_{SD}$ is higher, while $d_{SD}$ is lower such that classification using the Waserstein metric is both less meaningful and more likely to reflect noise due to MCMC sampling.\fi}}
 \label{fig:posts}
 \end{figure}
@@ -140,7 +130,7 @@ Finally, we can quantify the disagreement in signal between each data source. We
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/wassPanel.eps}
+\includegraphics[width=1\linewidth]{../figures/wassPanel.pdf}
 \caption{\textcolor{blue}{ \textbf{A}) Each point represents $(W_D, W_S)$ for one of the 600 simulated datasets with marginal histograms corresponding to the distribution of $W_D$ and $W_S$ respectively. \textbf{B}) The number of simulated datasets classified as Date of Seq Driven, stratified by evolutionary rate and sampling proportion. \textbf{C}) Points coloured by number of site patterns. Lower site patterns tends to co-occur with date-driven classification. \textbf{D}) Points coloured by date span with no clear patterns corresponding with classification as for site patterns. }}
 \label{fig:wData}
 \end{figure}
@@ -152,9 +142,15 @@ The distribution of $W_S$ is more diffuse than $W_D$, meaning the sequence data 
 
 \textcolor{blue}{Sampling proportion appears to play a secondary role in driving the influence of sequence data (Fig \ref{fig:wData}B). Lower sampling proportions coincide with a higher relative proportion of sequence-driven datasets. This matches expectation because lower sampling proportion increases the likelihood of sampling more divergent lineages, resulting in more site patterns to drive inference.}
 
+\textcolor{blue}{One of the core assumptions of phylodynamics is that inferred phylogenetic trees bear a resemblance in their shape and timing to underlying epidemiological networks \citep{featherstone_epidemiological_2022}. Based on this, we would expect that analyses with less uncertainty in posterior epidemiological estimates have posterior tree distributions that are more divergent. To test this expectation, we calculated tree distance metrics pairwise for samples of 100 trees taken from the posterior distribution of trees (n = 2400 with 4 analyses for the 600 simulated outbreaks). We focus on the mutual clulstering information (MCI) introduced by \citet{smith_information_2020} (Fig \ref{fig:ptreeDist}), but all observed patterns were repeated when using other metrics including Robinsons-Fould and Information-corrected Robinson's Fould. As expected, the full data treatment consistently had the lowest pairwise MCI since these analyses incorporated the most information, while the marginal prior reported the highest MCI values, reflecting the least information. Between these two extremes, sequence-only analyses consistently had a lower MCI than date-only treatments. This can be explained by sequence data providing information about favoured topologies via the phylogenetic likelihood. Conversely, date-only treatments incorporate no topological information and consistently have higher MCI values. Given that date-data tend drive inference, especially where evolutionary rate is low and to an extent where sampling proportion is high, this presents strong evidence that the \textit{chronology} of tips can be equally, if not more informative than the \textit{topology} of trees. This highlights the importance of curating sampling time data as carefully as sequence data is curated.}
+
 %---------------------------------------------------------------------------------------------------------
 \subsection*{Empirical Results}
+\subsubsection*{\textcolor{blue}{Australiian SARS-CoV-2 Clusters}}
 We analysed data from two SARS-CoV-2 transmission clusters from 2020 in Australia to demonstrate that date-driven and sequence-driven analyses can arise in practice (table \ref{tab:tab2}). The first cluster is classified as sequence-driven, with $r_{SD} = 0.223$ indicating an appreciable difference between the sequence posterior and complete data. $d_{SD} = 0.078$ adds that date data also drives an effect of similar size, offering the interpretation that both date and sequence data are influential in this analysis. The second cluster is  classified as date-driven, but with $r_{SD} = 0.009$ and $d_{SD}=0.008$. The low $r_{SD}$ value indicates a near-negligible difference between date, sequence, and complete data posteriors. Since $r_{SD}$ is low, $d_{SD}$ is necessarily also low. Due to this, classification is effectively meaningless and it can be concluded that both date and sequence data drive a highly congruent signal. Moreover, $W_N$ for both analyses is more than double each of $W_S$ and $W_D$, which affirms that both sources of data contribute to the posterior deviating from the prior and are therefore informative with respect to the prior in both analyses.
+
+\subsubsection*{\textcolor{blue}{2009 H1N1}}
+\textcolor{blue}{The above simulation study and SARS-CoV-2 Empirical data comprise of analyses where the evolutionary rate is fixed. To explore the effects of the natural non-identifiability between estimated tip dates and estimating evolutionary rates, we consider North-American H1N1 data from the 2009 Swine-Flu pandemic originally studied by \citet{hedge_2013_real-time}. Influenza is among the fastest evolving viruses. Continue this after analyses.}
 
 \begin{table}[H]
 \centering
@@ -178,13 +174,14 @@ $W_{N}$             &   0.325            &   0.481          \\
 %---------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------
 \section*{Discussion}
+
 \textcolor{blue}{\subsection{Practical Implications}
     \begin{itemize}
-        \item Need to curate date data as carefully as we do sequence data
+        \item Need to curate date data as carefully as we do sequence data. Bigger is not always better, so best to fileter out super spreading etc.
         \item Points about clock and identifiability (chat with Seb)
         \item Usability of new methods and wasserstein to look at effects of data in future analyses. As we saw, the whole is not the sum of the parts, so best to look at the signal encoded in each
-        \item Possibility of fixing the tree
-        \item Maybe: Use for other parameters??
+        \item Possibility of fixing the tree - we need topological constraints
+        \item Bigger is not always beter
     \end{itemize}
     }
     
@@ -196,6 +193,7 @@ $W_{N}$             &   0.325            &   0.481          \\
         \item Predictive way of classifiying information - clock is one way
     \end{itemize}
     }
+    
 The results of our simulation study add clarity to previous work showing that sampling times contribute substantially to phylodynamic inference under the birth death \citep{volz_sampling_2014, Featherstone2021Infectious}. We demonstrate that lower sequence diversity often precludes sequence data from a comparable effect. We also demonstrate that sequence data are not always secondary in influence and can drive inference of $R_{0}$ in some instances, affirming the sensitivity of the birth-death to the signal encoded in sequence data. The tendency for date data to drive inference more than sequence data may be explained by the reduction in uncertainty that each data source offers. Dates impose a hard bound on topology by restricting tree space to a subset of topologies that agree with the chronology of sampling times. Conversely, sequence data inform topology through phylogenetic likelihood, but do not definitively constrain tree space in the same way as date data.
 
 Our method offers novel insight for phylodynamics practitioners because the contribution of sequence data relative to sampling dates is often questioned in birth death analyses of densely sequenced outbreaks. It offers a reproducible approach to answering this question so the influence of genomic data can be commented on. For example, this is useful in a public health reporting context so phylodynamics experts can comment on the drivers inference as new data emerge. As such it offers a tool to initiate research into optimal sampling design for phylodynamic analysis. Any resulting theory can only be speculative at best, given the unpredictable nature of evolution, however this is an important consideration for the future as the scale of pathogen genome sequencing increases.
@@ -224,28 +222,28 @@ We analysed  each dataset under the four conditions above. In each, we placed a 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\linewidth]{../figures/wassersteinIntuition.eps}
+\includegraphics[width=0.5\linewidth]{../figures/wassersteinIntuition.pdf}
 \caption{\textcolor{blue}{ MAYBE CITE CS-PAPER. Visual intuition for calculation of the wasserstein metric. It can be thought of as integration over the horizontal distance between points of the cumulative distribution function. For two sets of posterior samples from an MCMC, the 10 horizontal distances would be replaced by the the size of the greatest set of samples.}}
 \label{fig:wassIntuition}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/tipDateOp.eps}
+\includegraphics[width=1\linewidth]{../figures/tipDateOp.pdf}
 \caption{\textcolor{blue}{Visual intuition for the novel tip-date operator that allows for inference from sequence only datasets. Each row represents a state in an hypothetical MCMC chain. The Final Sample Offset (FSO) is the time between the final sample and the theoretical end of the proposed birth-death process. It is normally held constant in inference. The tip date operator allows for new proposals of the FSO which allows tip dates to rescale relative one each other and in absolute time. The origin time does not contain the FSO.}}
 \label{fig:tipOp}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/postMCITreeDist.eps}
+\includegraphics[width=1\linewidth]{../figures/postMCITreeDist.pdf}
 \caption{\textcolor{blue}{Violin plots of pairwise mutual clustering information tree difference for 100 trees sampled posterior tree distributions for each simulated dataset. 100 trees were samples from each of the 600 posterior tree distributions a total of 100 times, resulting in 60,000 datapoints here, separated by the sampling proportion and evolutionary rate used in each simulation. Uniformly, Full data has the least tree-distance between posterior trees followed by the sequence-only, dates-only, and no-data treatments.}}
 \label{fig:ptreeDist}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\linewidth]{../figures/egTreeSpace.eps}
+\includegraphics[width=0.75\linewidth]{../figures/egTreeSpace.pdf}
 \caption{\textcolor{teal}{Note, I was really wrong in my earlier thinking about there being a different numbr of of topologies for each data source. I will need to revisit this when writing the paper. }\textcolor{blue}{Tree space for a tree with 3 taxa. There are a total of 18 possible ranked topologies, which would be the size of tree space for an analyses of a sequence-only dataset with tree samples. Trees in blue are those with the sampling chronology A, B, and then C. These represent the tree space for a hypothetical data-only dataset with three sampling times. Moreover, the disparity between the sequence-only tree space and date-only space grows with sample size, such that the state-space for sequence-only data is orders of magnitude larger than that for dates-only}}
 \label{fig:treeSpace}
 \end{figure}
@@ -253,21 +251,21 @@ We analysed  each dataset under the four conditions above. In each, we placed a 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/errorWasserstein.eps}
+\includegraphics[width=1\linewidth]{../figures/errorWasserstein.pdf}
 \caption{ \textbf{A}) Each point presents the number of misclassification in subsampling posterior $R_0$ for each of the 600 simulated datasets. X-axis is the log transformed difference between $W_S$ and $W_D$. \textbf{B}) Violin plots with jittered points of the difference between $W_S$ and $W_D$ for simulated alignments where there was wither some one no misclassification. Both \textbf{A} and \textbf{B} support that misclassication only occurs where the difference between $W_S$ and $W_D$ is negligible, and classification is not meaningful in the first instance.}
 \label{fig:validateW}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/wnHist.eps}
+\includegraphics[width=1\linewidth]{../figures/wnHist.pdf}
 \caption{Histogram of $W_N$ for each simulated dataset, separated by evolutionary rate and sampling proportion. $W_N$ ranges from 0.06 to 1.02, such that simulated data provide additional information beyond that of the prior in each analysis.}
 \label{fig:wnHist}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\linewidth]{../figures/patternsClass.eps}
+\includegraphics[width=1\linewidth]{../figures/patternsClass.pdf}
 \caption{Date patterns ($=\frac{\text{Sampling Span}}{\text{Height}}$) against site patterns for each simulated dataset. Plots are separated by evolutionary rate and sampling proportion such that there are 600 points coloured by Wasserstein Classification across the entire figure. Higher evolutionary rates increase the proportion of Sequence driven datasets, but within each rate there is no clear pattern in date patterns, site patterns, or sampling rate driving classification.}
 \label{fig:patterns}
 \end{figure}
