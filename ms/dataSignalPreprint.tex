@@ -27,7 +27,7 @@
 \end{flushright}
 \begin{center}
 \begin{LARGE}
-    \textbf{Assessing the effects of date and sequence data in phylodynamics}
+    \textbf{Decoding the fundamental drivers of phylodynamic inference}
 \end{LARGE}
 \end{center}
 Leo A. Featherstone$^{\ast,1}$, Sebastian Duchene$^1$, Timothy G. Vaughan$^{2,3}$\\
@@ -146,7 +146,7 @@ The distribution of $W_S$ is more diffuse than $W_D$, meaning the sequence data 
 
 %---------------------------------------------------------------------------------------------------------
 \subsection*{Empirical Results}
-\subsubsection*{\textcolor{blue}{Australiian SARS-CoV-2 Clusters}}
+\subsubsection*{\textcolor{blue}{Australian SARS-CoV-2 Clusters}}
 We analysed data from two SARS-CoV-2 transmission clusters from 2020 in Australia to demonstrate that date-driven and sequence-driven analyses can arise in practice (table \ref{tab:tab2}). The first cluster is classified as sequence-driven, with $r_{SD} = 0.223$ indicating an appreciable difference between the sequence posterior and complete data. $d_{SD} = 0.078$ adds that date data also drives an effect of similar size, offering the interpretation that both date and sequence data are influential in this analysis. The second cluster is  classified as date-driven, but with $r_{SD} = 0.009$ and $d_{SD}=0.008$. The low $r_{SD}$ value indicates a near-negligible difference between date, sequence, and complete data posteriors. Since $r_{SD}$ is low, $d_{SD}$ is necessarily also low. Due to this, classification is effectively meaningless and it can be concluded that both date and sequence data drive a highly congruent signal. Moreover, $W_N$ for both analyses is more than double each of $W_S$ and $W_D$, which affirms that both sources of data contribute to the posterior deviating from the prior and are therefore informative with respect to the prior in both analyses.
 
 \subsubsection*{\textcolor{blue}{2009 H1N1}}
@@ -174,8 +174,29 @@ $W_{N}$             &   0.325            &   0.481          \\
 %---------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------
 \section*{Discussion}
+\textcolor{blue}{What i want to say: The key messages from the results is that the number of site patterns is key driving whether or not an analysis is date driven or seq driven. Note that we refer to evolutionary rate earlier, but really we are referring to the number of mutations $rGT$ where r is the rate, G is the genome size, and T is notionally the average evolutionary time between samples such that more mutations between tips can be aided by a larger genome despite a lower rate, or more diffuse sampling to resuce the liielihod of sampling identical sequences.} 
 
-\textcolor{blue}{\subsection{Practical Implications}
+\textcolor{blue}{The reason why sequence data is in a sense the limiting-reagent of phylodymamic inference is that it must explore a larger state space of trees. Date data need to integrate of the state space of topologies given a sampling chronology, while sequence data probabilistically influence topology while inferring absolte and relative timong of tips - a far more expensive state space. While massive sampling efforts are laudable and useful for methods in genomic epidemiology outside of phylodynamics, we stress the importance of effective down-sampling from these massive databases must be equally scrutinised. For instance, it would be of minimal returning value to include samples that are both identical in sampling time and sequence, such as from a super spreading event.}
+
+\textcolor{blue}{A key note about the out analyses of simulated and empirical data is that the evolutionary rate was fixed in all analyses. It should therefore be highlighted that there is a key un-identifiability between sequence data and the evolutionary rate in estimating tip dates. An insufficiency of information in both sequence data and certainty in the evolutionary rate means there will be little information to guide the estimation of sampling chronology. Indeed, we attempted analses with the sequence-only dataset and a relaxed clock model, but found that analyses were prohibitively non convergent. This, however, is a key indication in of itself because it demonstrates the non-identifiability. Fixing the clock can be thought of the highest form of as an upper bound on the certainty of temporal-signal which sequence data can leverage to estimate sampling chronology. If, for siulated data with a near-perfect temproal signal, sequence data can still be of secondary influence to sampling time data, then this emphasises the unavoidable importance of sampling time information in phylodynamic inference.}
+
+
+% what about the phylodynamic threshold in all of this
+
+\textcolor{blue}{\subsection{Practical Implications}}
+
+
+\textcolor{blue}{The key message for those organising the collection of pathogen genome datasets is that bigger is not automatically better as many researchers as may be the message for most statistical applications outside of phylodynamics. Instead, each additional data point is increasingly costly in sopra-linearly increasing the state space that sequence information must be distribured over.}
+
+\textcolor{blue}{Taken together, the results can be summarised as showing that the number of site patterns in a dataset is key to the influence of sequence information relative to dates with sampling proportion providing a secondary impact.}
+
+\textcolor{blue}{The second key acknowledgment here is that while we have motivated a notion of phylodynamically ideal data, biological reality does not fill this state space. For instance, an evolutionary rate of $10^{-1}$ (subs/site/time) on a genome of length $10^10$ would certainly yield data with ample site patterns for phylodynamic inference, but this evolutionary-phenosype would not be evolutionary viable. Instead, phylodynamics operates over microbes which broadly have genomes between between $10^4$ and $10^8$ bases and evolution rates from $10^{-2}$ to $10^{-6}$ (subs/site/year). In other words, most of the time we cannot expect well-resolved sequence datasets and sampling times will be an important factor in inference. Thus, to ensure we recover the added-value of genome data over sampling times, such as for dating of outbreaks and stronger indication of the shape of the underlying epidemiological network, we need to add constraint to our analyses to avoid diluting sequence information. This may come in the form of subsampling with the view to recoveriving a strong temporal signal and placing topological constraints on the data. For example, this could include fixing the tree in the analysis, constraining clade membership, or some combination of the two.}
+
+
+
+The key factor driving this pattern is that 
+
+The results provide several practical implications to allow phylodynamics to recover the added-value of genome data. 
     \begin{itemize}
         \item Need to curate date data as carefully as we do sequence data. Bigger is not always better, so best to fileter out super spreading etc.
         \item Points about clock and identifiability (chat with Seb)
@@ -183,16 +204,22 @@ $W_{N}$             &   0.325            &   0.481          \\
         \item Possibility of fixing the tree - we need topological constraints
         \item Bigger is not always beter
     \end{itemize}
-    }
+    
     
 \textcolor{blue}{\subsection{Future Directions}
+The work presented here presents the beginning of a deeper interrogation to the driver of phylodynamic inference. Such an understanding is critical as phylodynamics becomes a mainstay of infectious diesease surveillance.}
+
+\textcolor{blue}{Here we have presented a methods, based on the wasserstein metric, for assaying the drivers of phylodynamic inference in a post-hoc fashion. A critical future direction would be to develop predictive methods, with explitic mathematical formulae for the information content of phylodynamic data. Such a toolkit would enable a theory of optimal sampling for phylodynamic inference to be explicitly described. However, we stress that a method to assay the drivers of inference must be developed first to help measure the effectiveness of any future predictive methods. Future efforts could focuse on optimising the number of mutations between samples using the relationship $rGT$.}
+
+\textcolor{blue}{Of course, the above guidelines relate to the inherent limitations of phylodynamic inference in pairing a branching phylogenetic model with epidemiological models. Another key step towards optimising the information gained from sampling would be newer phylodynamic models that allow for conditioning upon sampling events. (See Tim for some kind of citation here)}
+
     \begin{itemize}
         \item Optimal Sampling: Need a way to judge what is optimal, assay the effects of sampling strategies
         \item Quality control new methods - e.g. cancer/ developmental phylodynamics where we have control over mutability and sampling time points
         \item Need some kind of statement about trends in sizes of phyloydnamics datasets, and non-linear increase with state space of inference
         \item Predictive way of classifiying information - clock is one way
     \end{itemize}
-    }
+    
     
 The results of our simulation study add clarity to previous work showing that sampling times contribute substantially to phylodynamic inference under the birth death \citep{volz_sampling_2014, Featherstone2021Infectious}. We demonstrate that lower sequence diversity often precludes sequence data from a comparable effect. We also demonstrate that sequence data are not always secondary in influence and can drive inference of $R_{0}$ in some instances, affirming the sensitivity of the birth-death to the signal encoded in sequence data. The tendency for date data to drive inference more than sequence data may be explained by the reduction in uncertainty that each data source offers. Dates impose a hard bound on topology by restricting tree space to a subset of topologies that agree with the chronology of sampling times. Conversely, sequence data inform topology through phylogenetic likelihood, but do not definitively constrain tree space in the same way as date data.
 
