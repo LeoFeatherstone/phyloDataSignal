@@ -82,7 +82,6 @@ plotTheme <- function() {
   )
  }
 
-
 sampProp.labs <- c("Sampling prop. = 0.05",
  "Sampling prop. = 0.5",
  "Sampling prop. = 1.0")
@@ -103,6 +102,26 @@ xlab(TeX("W_{D}")) + ylab(TeX("W_{S}")) +
 annotate("text", x = c(0.25, 0.55), y = c(0.55, 0.25),
   label = c("Date-Driven", "Seq-Driven"), size = 2.5) +
 plotTheme()
+
+# Site pattern plot normalised by sampling size
+wassersteinData <- wassersteinData %>% mutate(relSP = sitePatterns / (sampProp * 500))
+
+p2_1 <- ggplot(wassersteinData, aes(x = wd, y = ws, fill = relSP)) +
+xlim(0, 0.75) + ylim(0, 0.75) +
+# shading
+geom_polygon(aes(x = x, y = y), data = trsup, fill = alpha("grey", 0.5)) +
+geom_polygon(aes(x = x, y = y), data = trinf, fill = alpha("white", 0.5)) +
+geom_quadrant_lines(linetype = "solid") +
+geom_point(pch = 21, size = 2.5) +
+coord_fixed(ratio = 1) +
+scale_fill_continuous(name = TeX("\\frac{Site Patterns}{Num. Samples}"), type = "viridis", breaks = c(0, 1, 10), limits = c(0, 18)) +
+facet_wrap(~sampProp, labeller = labeller(sampProp = sampProp.labs)) +
+facet_wrap(~sampProp, labeller = labeller(sampProp = sampProp.labs)) +
+xlab(TeX("W_{D}")) + ylab(TeX("W_{S}")) +
+annotate("text", x = c(0.25, 0.55), y = c(0.55, 0.25),
+  label = c("Date-Driven", "Seq-Driven"), size = 2.5) +
+plotTheme()
+
 
 # Date span plot (third panel)
 p3 <- ggplot(wassersteinData, aes(x = wd, y = ws, fill = datePatterns)) +
@@ -137,12 +156,15 @@ tiff(file = paste0(figPath, 'wassSeqPat.tiff'),
  p2
 dev.off()
 
+pdf(file = paste0(figPath, "relSP.pdf"), height = 3, width = 6,
+ useDingbats = FALSE)
+ p2_1
+dev.off()
+
 tiff(file = paste0(figPath, 'wassDatePat.tiff'),
  units = "in", height = 3, width = 6, res = 300, compression = "lzw")
  p3
 dev.off()
-
-
 
 # Violin distribution of wass. Maybe move to supps
 source('ggSplitViolin.R')
