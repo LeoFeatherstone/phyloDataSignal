@@ -23,6 +23,7 @@ GeomSplitViolin <- ggproto("GeomSplitViolin", GeomViolin,
   }
 })
 
+
 geom_split_violin <- function(mapping = NULL, data = NULL, stat = "ydensity", position = "identity", ..., 
                               draw_quantiles = NULL, trim = TRUE, scale = "area", na.rm = FALSE, 
                               show.legend = NA, inherit.aes = TRUE) {
