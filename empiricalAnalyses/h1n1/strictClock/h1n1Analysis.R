@@ -11,8 +11,6 @@ library(GGally)
 library(ggtext)
 library(transport)
 source("ggSplitViolin.R")
-library("PupillometryR")
-library(ggridges)
 library(lubridate)
 library(ggforce)
 
@@ -55,7 +53,8 @@ posts <- bind_rows(logs, .id = "id") %>%
   TRUE ~ "prior")) %>%
  mutate(interval = gsub(interval, pattern = "_BDSKY_Serial.", replacement = "")) %>%
  mutate(pos = case_when(interval == "reproductiveNumber1" ~ as.Date("2009-05-07"),
- 						interval == "reproductiveNumber2" ~ as.Date("2009-09-07")))
+ 						interval == "reproductiveNumber2" ~ as.Date("2009-09-07"))) %>%
+ mutate(interval = gsub(interval, pattern = "reproductiveNumber", replacement = ""))
 
 # getting wasserstein values
 # for prior
@@ -68,7 +67,7 @@ for (treat in unique(posts$treatment)){
 	v2 <- unlist(na.omit(posts[which(posts$treatment == treat & posts$clockPrior == clock), "samplingProportion_BDSKY_Serial"]))
 	wass <- wasserstein1d(v1, v2)
 
-   empWass <- rbind(empWass, c(treat, clock, int, NA, wass))
+   empWass <- rbind(empWass, c(treat, clock, NA, NA, wass))
 
   for (int in unique(posts$interval)){
 	v1 <- unlist(na.omit(posts[which(posts$treatment == "fullData" & posts$clockPrior == clock & posts$interval == int), "R0"]))
@@ -87,6 +86,11 @@ sampDates <- as.numeric(gsub(rownames(aln), pattern = ".+\\|.+\\|", replacement 
 sampDates <- as.Date(lubridate::date_decimal(sampDates))
 
 fill <- alpha(viridis(4)[-3], 0.5)
+
+# sanity - checking order of clock for split violin
+#ggplot(data = subset(posts, treatment == "dateData" & interval == "reproductiveNumber1")) +
+#geom_split_violin(aes(x = interval, y = R0, fill = clockPrior))
+
 
 rPlot <- ggplot() +
  geom_split_violin(data = subset(posts, treatment == "fullData" & interval == 1),
@@ -107,12 +111,12 @@ rPlot <- ggplot() +
    #aes(x = as.Date(date_decimal(decimal_date(max(sampDates)) - TreeHeight)), y = ..count.. / 10000)) +
   geom_histogram(data = backup[[4]],
    aes(x = as.Date(date_decimal(decimal_date(max(sampDates)) - TreeHeight)), y = ..count.. / 100000),
-   fill= "steelblue", bins = 50) +
+   fill= fill[2], bins = 50) +
   geom_vline(xintercept = as.Date("2009-07-07"), lty = 2) +
   annotate("label", x = unique(posts$pos)[1], y = 1.75,
-   label = "Fixed Clock <-> Clock Prior") +
+   label = "Fixed Clock <-> Clock Prior ") +
   annotate("label", x = mean(as.Date(date_decimal(decimal_date(max(sampDates)) - backup[[4]]$TreeHeight))),
-   y = 0.5, label = "tMRCA\n(Fixed Clock)") +
+   y = 0.5, label = "MRCA\n(Fixed Clock,\nFull Data)") +
   scale_x_date(date_labels = "%b '%y", label = "",
    limits = as.Date(c("2008-11-01", max(sampDates)))) +
   xlab("") + ylab(expression(Posterior ~ italic(R[0]))) +
@@ -127,8 +131,6 @@ leg <- cowplot::get_legend(
   labels = c("Date Data", "Full Data", "Sequence Data"), name = "") +
  theme(legend.text = element_text(size = 11))
 )
-
-# To do, fix ordering and positions of R intervals
 
 # splitting sampling plots
 pFullSeqData <-
@@ -154,7 +156,7 @@ ggplot() +
     fill = fill[1], scale = "width") +
  ylab("Posterior Sampling Porportion") +
  annotate("label", x = 0, y = 1,
-   label = "Fixed Clock <-> Clock Prior") +
+   label = "Fixed Clock <-> Clock Prior ") +
  annotate("segment", x = 0, y = 0, xend = 1, yend = 0) +
  annotate("segment", x = 0, y = 0.009, xend = 0.5, yend = 0.05) +
  annotate("segment", x = 0.5, y = 0.05, xend = 0.75, yend = 0.8) +
@@ -166,9 +168,6 @@ ggplot() +
   axis.title.x = element_blank(),
   axis.text.y = element_text(size = 11),
   axis.title.y = element_text(size = 11))
-
-
-
 
 sampPlot <- cowplot::plot_grid(pDateData, leg, nrow = 1, rel_widths = c(3, 1))
 
