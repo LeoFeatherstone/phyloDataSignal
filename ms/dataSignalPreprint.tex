@@ -154,6 +154,26 @@ The distribution of $W_S$ is more diffuse than $W_D$, meaning the sequence data 
 \subsubsection*{\textcolor{blue}{Australian SARS-CoV-2 Clusters}}
 We analysed data from two SARS-CoV-2 transmission clusters from 2020 in Australia to demonstrate that date-driven and sequence-driven analyses can arise in practice (table \ref{tab:tab2}). The first cluster is classified as sequence-driven, with $r_{SD} = 0.223$ indicating an appreciable difference between the sequence posterior and complete data. $d_{SD} = 0.078$ adds that date data also drives an effect of similar size, offering the interpretation that both date and sequence data are influential in this analysis. The second cluster is  classified as date-driven, but with $r_{SD} = 0.009$ and $d_{SD}=0.008$. The low $r_{SD}$ value indicates a near-negligible difference between date, sequence, and complete data posteriors. Since $r_{SD}$ is low, $d_{SD}$ is necessarily also low. Due to this, classification is effectively meaningless and it can be concluded that both date and sequence data drive a highly congruent signal. Moreover, $W_N$ for both analyses is more than double each of $W_S$ and $W_D$, which affirms that both sources of data contribute to the posterior deviating from the prior and are therefore informative with respect to the prior in both analyses.
 
+\begin{table}[H]
+\centering
+\caption{SARA-CoV-2 Clusters}
+\begin{tabular}{lrr}
+                    &   Cluster 1      &   Cluster 2     \\
+\midrule
+n                   &   112             &   188             \\
+Classification      &   Seq-Driven       &   Date-Driven    \\
+$r_{SD}$          &   0.223            &   0.009          \\
+$d_{SD}$          &   0.078           &   0.008          \\
+%Site-Patterns       &   -                &   -              \\
+%Date-Patterns       &   -                &   -              \\
+$W_{D}$             &   0.192            &   0.001          \\
+$W_{S}$             &   0.114            &   0.009          \\
+$W_{N}$             &   0.325            &   0.481          \\
+\bottomrule 
+\label{tab:tab2}
+\end{tabular}
+\end{table}
+
 \subsubsection*{\textcolor{blue}{2009 H1N1}}
 \textcolor{blue}{The above simulation study and SARS-CoV-2 Empirical data comprise of analyses where the evolutionary rate is fixed. To explore the effects of the natural non-identifiability between estimated tip dates and estimating evolutionary rates, we consider North-American H1N1 data from the 2009 Swine-Flu pandemic originally studied by \citet{hedge_2013_real-time}. Influenza is among the fastest evolving viruses. Continue this after analyses.}
 
@@ -176,6 +196,14 @@ $W_{N}$             &   0.325            &   0.481          \\
 \label{tab:tab2}
 \end{tabular}
 \end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\linewidth]{../figures/h1n1Posts.pdf}
+\caption{Posterior estimates for $R_0$ and $p$ for the 2009 H1N1 dataset. The marginal prior is ommited. \textbf{(A)} . \textbf{(B)}}
+\label{fig:h1n1Fig}
+\end{figure}
+
 %---------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------
 \section*{Discussion}
