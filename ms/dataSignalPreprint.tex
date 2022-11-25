@@ -152,12 +152,13 @@ The distribution of $W_S$ is more diffuse than $W_D$, meaning the sequence data 
 %---------------------------------------------------------------------------------------------------------
 \subsection*{Empirical Results}
 \subsubsection*{\textcolor{blue}{Australian SARS-CoV-2 Clusters}}
-We analysed data from two SARS-CoV-2 transmission clusters from 2020 in Australia to demonstrate that date-driven and sequence-driven analyses can arise in practice (table \ref{tab:tab2}). The first cluster is classified as sequence-driven, with $r_{SD} = 0.223$ indicating an appreciable difference between the sequence posterior and complete data. $d_{SD} = 0.078$ adds that date data also drives an effect of similar size, offering the interpretation that both date and sequence data are influential in this analysis. The second cluster is  classified as date-driven, but with $r_{SD} = 0.009$ and $d_{SD}=0.008$. The low $r_{SD}$ value indicates a near-negligible difference between date, sequence, and complete data posteriors. Since $r_{SD}$ is low, $d_{SD}$ is necessarily also low. Due to this, classification is effectively meaningless and it can be concluded that both date and sequence data drive a highly congruent signal. Moreover, $W_N$ for both analyses is more than double each of $W_S$ and $W_D$, which affirms that both sources of data contribute to the posterior deviating from the prior and are therefore informative with respect to the prior in both analyses.
+We analysed data from two SARS-CoV-2 transmission clusters from 2020 in Australia to demonstrate that date-driven and sequence-driven analyses can arise in practice (table \ref{tab:covidTab}). The first cluster is classified as sequence-driven, with $r_{SD} = 0.223$ indicating an appreciable difference between the sequence posterior and complete data. $d_{SD} = 0.078$ adds that date data also drives an effect of similar size, offering the interpretation that both date and sequence data are influential in this analysis. The second cluster is  classified as date-driven, but with $r_{SD} = 0.009$ and $d_{SD}=0.008$. The low $r_{SD}$ value indicates a near-negligible difference between date, sequence, and complete data posteriors. Since $r_{SD}$ is low, $d_{SD}$ is necessarily also low. Due to this, classification is effectively meaningless and it can be concluded that both date and sequence data drive a highly congruent signal. Moreover, $W_N$ for both analyses is more than double each of $W_S$ and $W_D$, which affirms that both sources of data contribute to the posterior deviating from the prior and are therefore informative with respect to the prior in both analyses.
 
 \begin{table}[H]
 \centering
-\caption{SARA-CoV-2 Clusters}
+\caption{SARS-CoV-2 Clusters}
 \begin{tabular}{lrr}
+\midrule
                     &   Cluster 1      &   Cluster 2     \\
 \midrule
 n                   &   112             &   188             \\
@@ -170,7 +171,7 @@ $W_{D}$             &   0.192            &   0.001          \\
 $W_{S}$             &   0.114            &   0.009          \\
 $W_{N}$             &   0.325            &   0.481          \\
 \bottomrule 
-\label{tab:tab2}
+\label{tab:covidTab}
 \end{tabular}
 \end{table}
 
@@ -179,28 +180,26 @@ $W_{N}$             &   0.325            &   0.481          \\
 
 \begin{table}[H]
 \centering
-\caption{Empirical data}
-\begin{tabular}{lrr}
-                    &   Cluster 1      &   Cluster 2     \\
+\caption{2009 H1N1}
+\begin{tabular}{lrrrrrr}
 \midrule
-n                   &   112             &   188             \\
-Classification      &   Seq-Driven       &   Date-Driven    \\
-$r_{SD}$          &   0.223            &   0.009          \\
-$d_{SD}$          &   0.078           &   0.008          \\
-%Site-Patterns       &   -                &   -              \\
-%Date-Patterns       &   -                &   -              \\
-$W_{D}$             &   0.192            &   0.001          \\
-$W_{S}$             &   0.114            &   0.009          \\
-$W_{N}$             &   0.325            &   0.481          \\
+& \multicolumn{2}{c}{\textbf{$R_{e_1}$}} & \multicolumn{2}{|c|}{\textbf{$R_{e_2}$}} &
+\multicolumn{2}{c}{\textbf{$p$}}\\
+\midrule
+Clock Prior  & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ \\
+\midrule
+$W_{D}$   &   0.069   &  0.168   &   0.05    &  0.039  & 0.239 & 0.255 \\
+$W_{S}$   &   0.375   &  0.145   &   0.159   &  0.135  & 0.001 & 0.002\\ 
+$W_{N}$   &   0.071   &  0.171   &    0.947  &  10.9   & 0.891 & 0.882\\
 \bottomrule 
-\label{tab:tab2}
+\label{tab:h1n1Tab}
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figures/h1n1Posts.pdf}
-\caption{Posterior estimates for $R_0$ and $p$ for the 2009 H1N1 dataset. The marginal prior is ommited. \textbf{(A)} . \textbf{(B)}}
+\caption{\textcolor{blue}{Posterior estimates for $R_0$ and $p$ for the 2009 H1N1 dataset. \textbf{A)} Histogram gives the scaled posterior of the tMRCA for the dataset from analysis of the full data under a strict clock. Vertical dashes along the date axis represent sampling times in the dataset. The vertical dashed line marks the change time between $R_{e_1}$ and $R_{e_2}$. Asymmetrical violin plots give the posterior density for $R_e$ under each data treatment with the marginal prior omitted. Distributions on the left correspond to analyses with a fixed evolutionary rate and those on the right correspond analyses with a uniform prior on the evolutionary rate. the more diffuse clock prior increases the influence of data data.\textbf{B)} An asymmetrical violin plor of the posterior sampling proportion with the left and right corresponding to fixed and relaxed clock identically to \textbf{A}. Sequence data drives inference for both clock prior configurations.}}
 \label{fig:h1n1Fig}
 \end{figure}
 
@@ -251,7 +250,7 @@ The work presented here presents the beginning of a deeper interrogation to the 
 
 \textcolor{blue}{Of course, the above guidelines relate to the inherent limitations of phylodynamic inference in pairing a branching phylogenetic model with epidemiological models. Another key step towards optimising the information gained from sampling would be newer phylodynamic models that allow for conditioning upon sampling events. (See Tim for some kind of citation here)}
     
-\textcolor{blue}{\subsection{Final Remarks}
+\textcolor{blue}{\subsection{Final Remarks}}
 % Add a point about tie size of phylodynamics datasets growing massively, so need to future proof-our results given that computation is slow, expensive, etc. 
 
 %---------------------------------------------------------------------------------------------------------
