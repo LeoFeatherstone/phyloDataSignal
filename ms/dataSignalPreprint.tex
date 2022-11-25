@@ -176,7 +176,15 @@ $W_{N}$             &   0.325            &   0.481          \\
 \end{table}
 
 \subsubsection*{\textcolor{blue}{2009 H1N1}}
-\textcolor{blue}{The above simulation study and SARS-CoV-2 Empirical data comprise of analyses where the evolutionary rate is fixed. To explore the effects of the natural non-identifiability between estimated tip dates and estimating evolutionary rates, we consider North-American H1N1 data from the 2009 Swine-Flu pandemic originally studied by \citet{hedge_2013_real-time}. Influenza is among the fastest evolving viruses. Continue this after analyses.}
+\textcolor{blue}{The above simulation study and SARS-CoV-2 Empirical data comprise of analyses where the evolutionary rate is fixed and a sole focus on $R_0$. However, analyses with this level of prior uncertainty are uncommon. To explore the effects of the natural non-identifiability between estimated tip dates and evolutionary rates, we consider North-American H1N1 data from the 2009 Swine-Flu pandemic originally studied by \citet{hedge_2013_real-time}.}
+
+\textcolor{blue}{We inferred two $R_e$ values before and after early July 2009, the sampling proportion, and conduced analyses with a fixed evolutionary rate and a uniform prior to study nonidentifiability between tip dates and evolutionary rate \ref{fig:h1n1Fig}. We applied each data treatment as for the simulation study and SARS-CoV-2 data and recorded $W_{\bullet}$ values for each \ref{tab:h1n1Tab}.}
+
+\textcolor{blue}{The results demonstrate non-identifiability between estimating tip dates and evolutionary rate with higher $W_S$ values when using a prior on the evolutionary rate than when fixing it \ref{tab:h1n1Tab}. This can be seen as the Full Data posterior $R_e$ being more similar to the Sequence Only posterior $R_e$ for both $R_e$ intervals in Fig \ref{fig:h1n1Fig} A.}
+
+\textcolor{blue}{Estimates of sampling proportion appear to be strongly sequence driven regardless of evolutionary rate prior (Fig \ref{fig:h1n1Fig} B). This is expected because a fairly defuse $\beta(1, 1)$ prior was places on $p$, meaning sequence information was essential to informing the evolutionary distance between samples to drive estimates of sampling proportion lower. Conversely, estimates with date-only data are much higher and more uncertain owing to the lack of sequence information. This demonstrates that not all paramters are influenced by date and sequence data in similar proportion.}
+
+\textcolor{blue}{Taken together, the results of the H1N1 dataset demonstrate that uncertainty in evolutionary rate prior partly determines how informative sequence data are, since any information in sequence data is used in shifting from prior to posterior. }
 
 \begin{table}[H]
 \centering
@@ -186,7 +194,7 @@ $W_{N}$             &   0.325            &   0.481          \\
 & \multicolumn{2}{c}{\textbf{$R_{e_1}$}} & \multicolumn{2}{|c|}{\textbf{$R_{e_2}$}} &
 \multicolumn{2}{c}{\textbf{$p$}}\\
 \midrule
-Clock Prior  & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $=4\times10^{-3}$ \\
+Clock Prior  & $\textnormal{U}(10^{-4}, 10^{-2})$ & $4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $4\times10^{-3}$ & $\textnormal{U}(10^{-4}, 10^{-2})$ & $4\times10^{-3}$ \\
 \midrule
 $W_{D}$   &   0.069   &  0.168   &   0.05    &  0.039  & 0.239 & 0.255 \\
 $W_{S}$   &   0.375   &  0.145   &   0.159   &  0.135  & 0.001 & 0.002\\ 
@@ -199,7 +207,7 @@ $W_{N}$   &   0.071   &  0.171   &    0.947  &  10.9   & 0.891 & 0.882\\
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figures/h1n1Posts.pdf}
-\caption{\textcolor{blue}{Posterior estimates for $R_0$ and $p$ for the 2009 H1N1 dataset. \textbf{A)} Histogram gives the scaled posterior of the tMRCA for the dataset from analysis of the full data under a strict clock. Vertical dashes along the date axis represent sampling times in the dataset. The vertical dashed line marks the change time between $R_{e_1}$ and $R_{e_2}$. Asymmetrical violin plots give the posterior density for $R_e$ under each data treatment with the marginal prior omitted. Distributions on the left correspond to analyses with a fixed evolutionary rate and those on the right correspond analyses with a uniform prior on the evolutionary rate. the more diffuse clock prior increases the influence of data data.\textbf{B)} An asymmetrical violin plor of the posterior sampling proportion with the left and right corresponding to fixed and relaxed clock identically to \textbf{A}. Sequence data drives inference for both clock prior configurations.}}
+\caption{\textcolor{blue}{Posterior estimates for $R_0$ and $p$ for the 2009 H1N1 dataset. \textbf{A)} Histogram gives the scaled posterior of the tMRCA for the dataset from analysis of the full data under a strict clock. Vertical dashes along the date axis represent sampling times in the dataset. The vertical dashed line marks the change time between $R_{e_1}$ and $R_{e_2}$. Asymmetrical violin plots give the posterior density for $R_e$ under each data treatment with the marginal prior omitted. Distributions on the left correspond to analyses with a fixed evolutionary rate and those on the right correspond analyses with a uniform prior on the evolutionary rate. the more diffuse clock prior increases the influence of data data. \textbf{B)} An asymmetrical violin plor of the posterior sampling proportion with the left and right corresponding to fixed and relaxed clock identically to \textbf{A}. Sequence data drives inference for both clock prior configurations.}}
 \label{fig:h1n1Fig}
 \end{figure}
 
