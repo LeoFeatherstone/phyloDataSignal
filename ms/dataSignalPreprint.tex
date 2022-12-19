@@ -135,7 +135,7 @@ Low sequence diversity, measured here in the number of site patterns, seems to p
 
 Sampling proportion appears to play a secondary role in driving the influence of sequence data (Fig \ref{fig:wData}B, animated \href{https://github.com/LeoFeatherstone/phyloDataSignal/blob/main/figures/wassTraj.gif}{\underline{here}}). Lower sampling proportions coincide with a higher relative proportion of sequence-driven datasets. This matches expectation because lower sampling proportion increases the likelihood of sampling more divergent lineages, resulting in more site patterns to drive inference.
 
-One of the core assumptions of phylodynamics is that inferred phylogenetic trees bear a resemblance in their shape and timing to underlying epidemiological networks \citep{featherstone_epidemiological_2022}. Based on this, we would expect that analyses with less uncertainty in posterior epidemiological estimates have posterior tree distributions that are more divergent. To test this expectation, we calculated tree distance metrics pairwise for each of the 2400 posterior tree distributions, originating from the 600 simulated outbreaks and 4 data treatments. We sampled 100 trees from each posterior and considered the pairwise topological distance between each. We focus on the mutual clulstering information (MCI) introduced by \citet{smith_information_2020} (Fig \ref{fig:ptreeDist}), but all observed patterns were repeated when using other metrics including Robinsons-Fould and Information-corrected Robinson's Fould. The full data treatment consistently had the lowest pairwise MCI since these analyses incorporated the most information to constrain tree-space. The marginal prior, reflecting the least information, reported the highest MCI values. Between these two extremes, sequence-only analyses consistently had a lower MCI than date-only treatments. This can be explained by sequence data providing information about favoured topologies via the phylogenetic likelihood. Conversely, date-only data incorporate no topological information and consistently have higher MCI values. Given that date-data tend to drive inference, especially where evolutionary rate is low and to an extent where sampling proportion is high, this presents strong evidence that the \textit{chronology} of tips can be equally, if not more informative than the \textit{topology} of trees. This highlights the importance of curating sampling time data as carefully as sequence data is curated.
+One of the core assumptions of phylodynamics is that inferred phylogenetic trees bear a resemblance in their shape and timing to underlying epidemiological networks \citep{featherstone_epidemiological_2022}. Based on this, we would expect that analyses with less uncertainty in posterior epidemiological estimates have posterior tree distributions that are more divergent. To test this expectation, we calculated tree distance metrics pairwise for each of the 2400 posterior tree distributions, originating from the 600 simulated outbreaks and 4 data treatments. We sampled 100 trees from each posterior and considered the pairwise topological distance between each. We focus on the mutual clulstering information (MCI) introduced by \citet{smith_information_2020} (Fig \ref{fig:ptreeDist}), but all observed patterns were repeated when using other metrics including Robinson-Foulds and Information-corrected Robinson-Foulds. The full data treatment consistently had the lowest pairwise MCI since these analyses incorporated the most information to constrain tree-space. The marginal prior, reflecting the least information, reported the highest MCI values. Between these two extremes, sequence-only analyses consistently had a lower MCI than date-only treatments. This can be explained by sequence data providing information about favoured topologies via the phylogenetic likelihood. Conversely, date-only data incorporate no topological information and consistently have higher MCI values. Given that date-data tend to drive inference, especially where evolutionary rate is low and to an extent where sampling proportion is high, this presents strong evidence that the \textit{chronology} of tips can be equally, if not more informative than the \textit{topology} of trees. This highlights the importance of curating sampling time data as carefully as sequence data is curated. Moreover, this applies at the phylogenetic level of phylodynamic inference, as distinct from the choice of phylodynamic model and its parameters. 
 
 %---------------------------------------------------------------------------------------------------------
 \subsection*{Empirical Results}
@@ -170,9 +170,9 @@ The above simulation study and SARS-CoV-2 Empirical data consist of analyses whe
 
 We again fit a birth-death process, estimating two $R_e$ values before and after early July 2009 ($R_{e_1}$ and $R_{e_2}$ respectively) and the sampling proportion ($p$). Analyses were conducted with either a fixed evolutionary rate, $4\times10^-3$ subs/site/year following \citet{hedge_2013_real-time}, or a uniform prior $\textnormal{U}(10^{-4}, 10^{-2})$, and under each of the four data treatments defined above. We placed a non-informative $\beta(1,1)$ prior on the sampling proportion and fixed the becoming-uninfectious rate ($\delta=\frac{365.25\textnormal{ (days)}}{4}$), such that comparing analyses with a fixed or uniform prior on the evolutionary rate reveals the effects of uncertainty in evolutionary rate on $R_e$ and sampling proportion. Posterior distributions for $R_e$ and $p$ are presented in Fig \ref{fig:h1n1Fig} and Wasserstein values in table \ref{tab:h1n1Tab}.
 
-The patterns in posterior $R_e$ under each treatment verify the trade-off between estimating tip dates and evolutionary rate. This is reflected in higher $W_S$ values when using a prior on the evolutionary rate than when fixing it \ref{tab:h1n1Tab}, which corresponds to posterior $R_e$ using Full Data overlapping less with the posterior due of sequence data. Moreover, the sequence only posterior is wider where the uniform clock prior is used, reflecting that more sequence information is devoted to ascertaining the evolutionary rate where the prior is more diffuse, which would otherwise further ascertain $R_e$(Fig. \ref{fig:h1n1Fig} A).
+The patterns in posterior $R_e$ under each treatment verify the trade-off between estimating tip dates and evolutionary rate. This is reflected in higher $W_S$ values when using a prior on the evolutionary rate than when fixing it (Table \ref{tab:h1n1Tab}), which corresponds to posterior $R_e$ under Full Data overlapping less with the posterior from sequence data. Moreover, the sequence data posterior is wider where the uniform clock prior is used, reflecting that more sequence information is devoted to ascertaining the evolutionary rate where the prior is more diffuse, which would otherwise further ascertain $R_e$ (Fig. \ref{fig:h1n1Fig} A). There is also a disparity between the posterior tMRCA between each clock prior under Full Data (Only the fixed prior tMRCA is shown in Fig \ref{fig:h1n1Fig} A), which is expected given the well known non-identifiability between the evolutionary rate and tMRCA. 
 
-Estimates of sampling proportion appear to be strongly sequence driven regardless of evolutionary rate prior (Fig \ref{fig:h1n1Fig} B). The posterior sampling proportion is two orders of magnitude lower for the sequence data and full date treatments, both containing sequence information, than for date data alone. These estimates are far more in line with expectation too, given the disparity between the H1N1 sample size (n = 100), and scale of the 2009 H1N1 pandemic. This is expected because the diffuse $\beta(1, 1)$ prior placed on $p$ made sequence information essential to informing the evolutionary distance between samples driving estimates of sampling proportion lower. Conversely, estimates with date-only data are much higher and more uncertain owing to the lack of sequence information. This demonstrates that not all parameters are influenced by date and sequence data in to a similar extent.
+Estimates of sampling proportion appear to be strongly sequence driven regardless of evolutionary rate prior (Fig \ref{fig:h1n1Fig} B). The posterior sampling proportion is two orders of magnitude lower for the sequence data and full date treatments, both containing sequence information, than for date data alone. These estimates are far more in line with expectation too, given the disparity between the H1N1 sample size (n = 100), and scale of the 2009 H1N1 pandemic. This is expected because the diffuse $\beta(1, 1)$ prior placed on $p$ made sequence information essential to informing the evolutionary distance between samples and driving estimates of sampling proportion lower. Conversely, estimates with date-only data are much higher and more uncertain owing to the lack of sequence information. The evolutionary rate prior drives a similar trend as for $R_0$, but its effect is diminished by the major effect of sequence data. Altogether, this  highlights that different parameters can be draw from date and sequence data to different extents. 
 
 We do not present the marginal prior data in Fig \ref{fig:h1n1Fig} because each corresponding posterior is un-informatively broad (i.e. effectively uniform over the prior domain). However, this too supports our assertion of a trade-off between sequence information and posterior certainty in sampling proportion because of its contrast to the simulation studies and SARS-CoV-2 datasets where sampling proportion was fixed. The only information included in the marginal prior treatment is the sample size, and this is most informative when the sampling proportion is fixed. However, in the H1N1 analyses, the diffuse prior on sampling proportion means sample size alone is insufficient to drive an informatively narrow posterior and sequence is the primary driver of inference.
 
@@ -234,9 +234,9 @@ A final practical message is that a phylodynamically ideal microbe would, for ex
 \begin{table}[H]
 \centering
 \caption{Practical considerations for inference stratified by relevance to phylogenetic inference or the phylodynamic model (Birth-Death here).}
-\begin{tabular}{p{0.25\linewidth} p{0.375\linewidth} p{0.375\linewidth}} 
+\begin{tabular}{p{0.33\linewidth} | p{0.33\linewidth} | p{0.33\linewidth}} 
 \midrule
-Trade-off / Challenge in inference & 
+Trade-off / Un-identifiability / Challenge in inference & 
 Mitigating Action &
 Effect\\
 \midrule
@@ -244,36 +244,37 @@ Effect\\
 
 \midrule
 Ideally $\geq1$ Site Patterns per Sample &
-Lower sampling rate with longer sampling effort &
-More site patterns in sample\\[0.25cm]
+Sample population less frequently, if possible, for longer. &
+More site patterns\\[0.25cm]
 
 \midrule
 \multicolumn{3}{l}{\textbf{Phylodynamic model level (Birth-Death)}}\\   
 
 \midrule
-$tMRCA \leftrightarrow r^\dagger$ uncertainty & 
+$\textnormal{tMRCA} \leftrightarrow r^\dagger$  & 
 Reducing prior uncertainty in one reduces posterior uncertainty in the other &
-Constrains mutual uncertainty \\[0.25cm]
-
-$R_0 \leftrightarrow r$ &
-Narrowing prior $r$ &
-More sequence information available to ascertain $R_0$\\[0.25cm]
-
-$\textnormal{\#Site Patterns} \rightarrow p$ &
-\multicolumn{2}{l}{Consider if fewer site patterns in sample is inflating posterior $p$ erroneously}\\[0.25cm]
+Reduces mutual un-identifiability \\[0.25cm]
 
 Un-identifiability of $R_{0}, \delta, p$ &
 Fix at least one parameter \citep{louca2021fundamental} &
-Localise inference to correct congruence class of parameters\\
+Localise inference to correct congruence class of parameters\\[0.25cm]
+
+$R_0 \leftrightarrow r$ &
+\multirow{2}{*}{Narrowing prior $r$} &
+More sequence information available to ascertain $R_0$\\[0.25cm]
+
+$p^{\ddagger} \leftrightarrow r$ &
+&
+More sequence information available to ascertain $p$\\[0.25cm]
+
+$\textnormal{Site Patterns} \rightarrow p^{\ddagger}$ &
+\multicolumn{2}{l}{Consider if fewer site patterns in sample is inflating posterior $p$ erroneously}\\
+
 \bottomrule 
 \label{tab:pracRec}
 \end{tabular}
 \end{table}
-\footnotesize{$^\dagger$ The clock rate in subs/site/year}
-
-
-
-
+\footnotesize{$^\dagger$ The clock rate in subs/site/year. $^{\ddagger}$ Effect of sequence data much stronger than uncertainty in prior $r$.}
 
 \subsection*{Future Directions}
 The work presented here presents the beginning of a deeper interrogation to the driver of phylodynamic inference. Such an understanding is critical as phylodynamics becomes a mainstay of infectious disease surveillance.
