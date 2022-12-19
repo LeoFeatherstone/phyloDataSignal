@@ -30,12 +30,13 @@ backup <- logs
 
 # applying burnin. Adapted for chain above 10^9 in length
 burnin <- function(df) {
- if (dim(df)[1] > (10^9 / 10^4)) {
-  df <- df[-c(1:(0.5 * 10^9 / 10^4)), ]
- }
+ #if (dim(df)[1] > (10^9 / 10^4)) {
+  #df <- df[-c(1:(0.5 * 10^9 / 10^4)), ]
+ #}
  df <- df[-c(1:500), ]
 }
 
+# get burnin to check
 logs <- lapply(logs, function(x) burnin(x))
 
 # now slecting columns
@@ -43,6 +44,10 @@ logs <- lapply(logs,
  function(x) x[, grep(names(x), pattern = "reproductiveNumber|samplingProportion")])
 
 names(logs)
+
+# testing ess
+ess <- lapply(logs, function(x) coda::effectiveSize(x))
+
 
 posts <- bind_rows(logs, .id = "id") %>%
  pivot_longer(starts_with("reproductiveNumber"), values_to = "R0",
@@ -169,9 +174,9 @@ ggplot() +
   axis.text.y = element_text(size = 11),
   axis.title.y = element_text(size = 11))
 
-sampPlot <- cowplot::plot_grid(pDateData, leg, nrow = 1, rel_widths = c(3, 1))
+sampPlot <- cowplot::plot_grid(pDateData, leg, nrow = 1, rel_widths = c(3, 1), labels = c("B", NA))
 
 pdf(file = paste0(figPath, "h1n1Posts.pdf"), useDingbats = FALSE)
- cowplot::plot_grid(rPlot, sampPlot, nrow = 2)
+ cowplot::plot_grid(rPlot, sampPlot, nrow = 2, labels = c("A", NA))
 dev.off()
 
