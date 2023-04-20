@@ -264,6 +264,17 @@ $\textnormal{Site Patterns} \rightarrow p^{\ddagger}$ &
 \end{table}
 \footnotesize{$^\dagger$ The clock rate in subs/site/year. $^{\ddagger}$ Effect of sequence data much stronger than uncertainty in prior $r$.}
 
+\subsection*{\textcolor{blue}{Application}}
+\textcolor{blue}{
+In general, we recommend that users follow the same workflow as presented here to tease apart date and sequence signal when using the birth-death model. That is, separate data into each of the 4 treatments (marginal prior is optional), run analyses, and compare posteriors using the Wasserstein distance. However, we note that as will all Bayesian phylodynamic analyses, convergence to a posterior is not guaranteed, and our methods may not be feasible as in the case of $R_{e_2}$ for the H1N1 dataset. In this case, we the practical guidelines (summarised in Table \ref{tab:pracRec}) still offer a valuable reference for the design and interpretation of phylodynamic analyses under the birth-death model.
+
+The question remains as to what users should do if analyses appear insufficiently sequence driven. This depends entirely on the use case. For example, in work involving ancient DNA or fossil taxa, then the luxury of adding is unlikely to be available. Nevertheless, our workflow can still be applied to offer useful insight into the information driving the analyses at hand. 
+
+Conversely, our workflow is especially pertinent to public health work involving large datasets that informs policy and decision making. Here, it is especially important to test for the relative impacts of date and sequence as these directly the weight we may apply for phylodynamic evidence. For example, if results are heavily date driven, then less weighting may be given to inferred sampling proportions and conclusions about the number of un-sampled cases in turn. For example, there is an order of magnitude difference between date-only and sequence-only/full data posterior sampling proportion for the H1N1 dataset. As a second example, phylodynamic analyses may be employed to garner understanding about the origin of transmission, and again the level of credence in results can be judged relative to the impact of sequence in analyses. At this point, researchers may opt to include extra sequence data to enrich sequence information, or exclude duplicate samples to hone in on samples that drive sequence based inference. In the lease, our workflow offers the chance to develop a more complete picture of the driver of inference, so analyses can be better understood in the context from which they originated.
+
+In sum, the core value of our methods is to allow users to understand which of the complex combinations of dates and sequence drive inferences, offering far greater scope with which to interpret results.}
+
+
 \subsection*{Future Directions}
 The work presents the beginning of deeper interrogations of the drivers of phylodynamic inference. Such an understanding is critical as phylodynamics becomes a mainstay of infectious disease surveillance.
 
