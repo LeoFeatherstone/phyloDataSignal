@@ -27,7 +27,7 @@ names(rate.labs) <- unique(post$rate)
 sampProp.labs <- c("Simulation sampling proportion = 0.5", "Simulation sampling proportion = 1.0")
 names(sampProp.labs) <- unique(post$sampProp)[-1]
 
-tiff(file = paste0(figPath, "postEg.tiff"), compression = "lzw")
+pdf(file = paste0(figPath, "postEg.pdf"), useDingbats = FALSE)
  ggplot(subset(post, sampProp != 0.05), aes(x = R0, fill = type, label = class)) + geom_density() +
  labs(x = expression("Posterior R"[0]), y = "Density") +
  scale_fill_manual(values = alpha(viridis(4), 0.5), 

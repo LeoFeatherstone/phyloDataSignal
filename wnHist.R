@@ -29,8 +29,7 @@ p<-	ggplot(wassersteinData) +
 		axis.text=element_text(size=12))
 
 
-tiff(paste0(figPath, 'wnHist.tiff'), compression = "lzw", 
- units = "in", height = 4, width = 6, res = 300)
+pdf(paste0(figPath, 'wnHist.pdf'), useDingbats = FALSE, height = 4, width = 6)
 	p
 dev.off()
 
