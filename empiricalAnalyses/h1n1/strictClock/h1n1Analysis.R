@@ -28,11 +28,8 @@ names(logs) <- gsub(
 
 backup <- logs
 
-# applying burnin. Adapted for chain above 10^9 in length
+# applying burnin
 burnin <- function(df) {
- #if (dim(df)[1] > (10^9 / 10^4)) {
-  #df <- df[-c(1:(0.5 * 10^9 / 10^4)), ]
- #}
  df <- df[-c(1:500), ]
 }
 
@@ -124,7 +121,7 @@ rPlot <- ggplot() +
    y = 0.5, label = "MRCA\n(Fixed Clock,\nFull Data)") +
   scale_x_date(date_labels = "%b '%y", label = "",
    limits = as.Date(c("2008-11-01", max(sampDates)))) +
-  xlab("") + ylab(expression(Posterior ~ italic(R[0]))) +
+  xlab("") + ylab(expression(Posterior ~ italic(R[e]))) +
   theme_minimal() +
   theme(axis.text = element_text(size = 11),
         axis.title.y = element_text(size = 11))
@@ -179,4 +176,3 @@ sampPlot <- cowplot::plot_grid(pDateData, leg, nrow = 1, rel_widths = c(3, 1), l
 pdf(file = paste0(figPath, "h1n1Posts.pdf"), useDingbats = FALSE)
  cowplot::plot_grid(rPlot, sampPlot, nrow = 2, labels = c("A", NA))
 dev.off()
-
